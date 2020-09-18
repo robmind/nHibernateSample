@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping namespace="NilexTicket.DB" assembly="NilexTicket.DB" xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Ticket" table="`Tickets`" lazy ="false">
+		<id name="ID" access="property" column="`ID`">
+			<generator class="native" />
+		</id>
+		<property name="Content" type="String" column="`Content`" lazy ="false" />
+		<property name="CreateDate" type="DateTime" column="`CreateDate`" lazy ="false" />
+		<property name="ImageUrl" type="String" column="`ImageUrl`" length="200"  lazy ="false"/>
+		<property name="IsItRead" type="Boolean" column="`IsItRead`"  lazy ="false"/>
+		<property name="Priority" type="String" column="`Priority`" length="50"  lazy ="false"/>
+		<property name="Status" type="Boolean" column="`Status`"  lazy ="false"/>
+		<property name="Title" type="String" column="`Title`" length="150"  lazy ="false"/>
+		<set name="Comment" inverse="true" lazy ="false">
+			<key column="`TicketID`" />
+			<one-to-many class="Comment" />
+		</set>
+		<many-to-one name="User" class="User" column="`UserID`" not-null="true" fetch="select"  lazy ="false"/>
+	</class>
+</hibernate-mapping>

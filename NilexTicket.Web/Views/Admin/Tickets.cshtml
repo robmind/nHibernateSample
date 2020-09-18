@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "UserTickets";
+}
+@model IOrderedEnumerable<NilexTicket.DB.Ticket>
+<script>
+    function openCloseButton(a) {
+        $.ajax({
+            url: '/Admin/TicketStatusu?id=' + a,
+            method: 'POST',
+            success: function (result) {
+                if (result) {
+                    $("#btnStatus-" + a).removeClass("btn-success")
+                    $("#btnStatus-" + a).addClass("btn-primary")
+                    $("#btnStatus-" + a).text("Open")
+                }
+                else {
+                    $("#btnStatus-" + a).removeClass("btn-primary")
+                    $("#btnStatus-" + a).addClass("btn-success")
+                    $("#btnStatus-" + a).text("Close")
+                }
+            },
+            error: function () {
+                alert("hata")
+            }
+        });
+    }
+</script>
+
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-head-line">User Tickets ( Admin )</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-11">
+            <div class="row">
+                <span class="text-danger">
+                    You need to view to answer
+                </span>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    <a href="javascript:;">Ticket ID</a>
+                                </th>
+                                <th scope="col">
+                                    <a href="javascript:;">User</a>
+                                </th>
+                                <th scope="col">
+                                    <a href="javascript:;">Status</a>
+                                </th>
+                                <th scope="col">
+                                    <a href="javascript:;">Title</a>
+                                </th>
+                                <th scope="col">
+                                    <a href="javascript:;">Priority</a>
+                                </th>
+                                <th scope="col">
+                                    <a href="javascript:;">Preview /Reply</a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @foreach (var ticket in Model)
+                            {
+                                <tr>
+                                    <td>@ticket.ID</td>
+                                    <td>@ticket.User.Username</td>
+                                    <td>
+                                        <a href="javascript:;" class="btn @((bool)ticket.Status ? "btn-primary" :"btn-success") btn-xs" id="btnStatus-@ticket.ID" onclick="openCloseButton(@ticket.ID)">@((bool)ticket.Status ? "Open" : "Close")</a>
+
+                                    </td>
+                                    <td>@ticket.Title</td>
+                                    <td>
+                                        @{
+                                if (ticket.Priority == "High")
+                                {
+                                    <a class="btn btn-danger btn-xs">High</a>
+                                }
+                                else if (ticket.Priority == "Middle")
+                                {
+                                    <a class="btn btn-info btn-xs">Middle</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-warning btn-xs">Low</a>
+                                }
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="/Admin/TicketDetail/@ticket.ID" class="btn btn-xs btn-warning">Show</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

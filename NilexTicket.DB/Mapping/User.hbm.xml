@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping namespace="NilexTicket.DB" assembly="NilexTicket.DB" xmlns="urn:nhibernate-mapping-2.2">
+	<class name="User" table="`Users`">
+		<id name="ID" access="property" column="`ID`">
+			<generator class="native" />
+		</id>
+		<property name="Birthdate" type="String" column="`Birthdate`" length="50"  lazy ="false"/>
+		<property name="FullName" type="String" column="`FullName`" length="30"  lazy ="false"/>
+		<property name="Mail" type="String" column="`Mail`" length="100"  lazy ="false"/>
+		<property name="Password" type="String" column="`Password`" length="20"  lazy ="false"/>
+		<property name="Role" type="String" column="`Role`" length="50"  lazy ="false"/>
+		<property name="Username" type="String" column="`Username`" length="100"  lazy ="false"/>
+		<set name="Comment" inverse="true" lazy ="false">
+			<key column="`UserID`" />
+			<one-to-many class="Comment" />
+		</set>
+		<set name="Ticket" inverse="true" lazy ="false">
+			<key column="`UserID`" />
+			<one-to-many class="Ticket" />
+		</set>
+	</class>
+</hibernate-mapping>

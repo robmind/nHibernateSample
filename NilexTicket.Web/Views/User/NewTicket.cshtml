@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "NewTicket";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<script src="~/Content/js/newTicket.js"></script>
+
+<div id="page-inner">
+    <div class="row" id="mesaj_div" hidden>
+        <div class="col-md-7 col-xs-offset-1 text-center alert alert-success" id="clasDanger">
+            <span id="Message">Your ticket has been created successfully</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <h1 class="page-head-line">TICKET CREATE</h1>
+            <form action="/User/NewTicket" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Priority</label>
+                        <select class="form-control" id="Priority" name="Priority">
+                            <option value="Middle">Middle</option>
+                            <option value="Low">Low</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Title</label>
+                        <input class="form-control" id="Title" name="Title" type="text" required>
+                        <label>Comment</label>
+                        <textarea class="form-control col-md-12" cols="20" id="Content" name="Content" rows="10" style="float:none" required></textarea>
+                        <label>File Choose ( Optional )</label>
+                        <input type="file" accept=".png, .jpg, .jpeg" class="form-control" name="ImageUrl" id="ImageUrl">
+                        <br>
+                        <input type="submit" class="btn btn-info" id="btn-newticket" value="Save">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

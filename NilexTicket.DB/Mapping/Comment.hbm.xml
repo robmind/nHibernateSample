@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping namespace="NilexTicket.DB" assembly="NilexTicket.DB" xmlns="urn:nhibernate-mapping-2.2">
+	<class name="Comment" table="`Comments`" lazy ="false">
+		<id name="ID" access="property" column="`ID`">
+			<generator class="native" />
+		</id>
+		<property name="Explanation" type="String" column="`Explanation`"  lazy ="false"/>
+		<property name="CreateDate" type="DateTime" column="`CreateDate`"  lazy ="false"/>
+		<many-to-one name="Ticket" class="Ticket" column="`TicketID`" not-null="true" fetch="select"  lazy ="false"/>
+		<many-to-one name="User" class="User" column="`UserID`" not-null="true" fetch="select"  lazy ="false"/>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "TicketDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model IEnumerable<NilexTicket.DB.Ticket>
+
+
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-head-line">Ticket Detail</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-10">
+                    <h3 style="float:left"> TICKET ID : @ViewBag.tck.ID &nbsp;</h3>
+                    <h3 style="float:left">- Comment Writer :</h3> 
+                    <h3 style="float:left; color :red"><ststrong>&nbsp; @ViewBag.tck.User.FullName</ststrong></h3>
+                    <h3 style="margin-left:20px" class="btn btn-primary btn-xs">@((bool)ViewBag.tck.Status ? "Open" : "Close")</h3>
+                    <hr />
+                    <div style="color: cadetblue; float:left; width:66px; margin-right:15px;" class="btn btn-default btn-xs"><strong>Title</strong></div>
+                    <h5>@ViewBag.tck.Title</h5>
+                    <hr />
+                    <a style="color: cadetblue; float:left; margin-right:15px;" class="btn btn-default btn-xs"><strong>Comment</strong></a>
+
+                    <h5>@ViewBag.tck.Content </h5>
+                    <hr>
+                    @if (ViewBag.tck.ImageUrl != null)
+                    {
+                        <a style="color: cadetblue;" class="btn btn-default btn-xs" href='@ViewBag.tck.ImageUrl' target='_blank'>-Ek-</a>
+                        <hr />
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <h3 class="text-success">Comments</h3>
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody id="CommentAdd">
+                                @foreach (var yrm in Model)
+                                {
+                                    DateTime dt = (DateTime)yrm.CreateDate;
+                                    <tr>
+                                        <td>
+                                            <div class="alert @((yrm.User.Role == "Admin") ? "alert-success" : "alert-info")">
+                                                <span> Create Date : @dt.ToString("dd.MM.yyyy HH:mm")</span> -
+                                                <span> Comment Writer : @yrm.User.FullName </span>
+                                            </div>
+
+                                            @yrm.Content
+                                            <br><br>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <hr>
+                    <h4> <strong>REPLY : </strong> </h4>
+                    <hr>
+                    <form action="/" enctype="multipart/form-data" method="post" onsubmit="return false">
+                        <input name="TicketID" id="TicketID" hidden value="@ViewBag.tck.ID" /> 
+                        <textarea class="form-control" cols="20" id="Explanation" name="Explanation" rows="10" required></textarea>
+                        <br />
+                        <input type="button" class="btn btn-success" onclick="CommentAdd()" value="Reply">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var sayac = 1;
+    function CommentAdd() {
+        if ($("#Explanation").val() != "") {
+            var dt = $("form").serializeArray();
+            $.ajax({
+                url: '/Admin/AddComment/',
+                data: dt,
+                method: 'POST',
+                success: function (result) {
+                    if (result) {
+                        $("#CommentAdd").append(
+                            "<tr id='eklenen-" + sayac + "' hidden>" +
+                                "<td>" +
+                                    "<div class='alert alert-success'>" +
+                                        "<span> Create Date : " + '@DateTime.Now.ToString("dd.MM.yyyy HH:mm")' + " </span> -" +
+                                         "<span> Comment Writer : " + '@ViewBag.kl' + "</span>" +
+                                    "</div>" +
+                                    $("#Explanation").val() +
+                                    "<br><br>" +
+                                "</td>" +
+                            "</tr>");
+
+                        $("#eklenen-" + sayac).fadeIn();
+                        $("#Explanation").val("");
+                        sayac++;
+                    }
+                },
+                error: function () {
+                    alert("An error occurred while adding a comment");
+                }
+            });
+
+        }
+    }
+</script>

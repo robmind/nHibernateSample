@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Tickets";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+@model IEnumerable<NilexTicket.DB.Ticket>
+<script src="~/Content/js/openCloseButton.js"></script>
+
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-head-line">MY TICKETS</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        <a>Ticket ID</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a>Status</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a>Priority</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a>Title</a>
+                                    </th>
+                                    <th scope="col">
+                                        <a>Preview</a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @foreach (var ticket in Model)
+                                {
+                                    <tr>
+                                        <td>@ticket.ID</td>
+                                        <td>
+                                            
+                                        <a href="javascript:;" class="btn @((bool)ticket.Status ? "btn-primary" :"btn-success") btn-xs" id="btnStatus-@ticket.ID" onclick="openCloseButton(@ticket.ID)">@((bool)ticket.Status ? "Open":"Close")</a>
+                                    
+                                        </td>
+                                        <td>
+                                            @{
+                                    if (ticket.Priority == "High")
+                                    {
+                                        <a class="btn btn-danger btn-xs">High</a>
+                                    }
+                                    else if (ticket.Priority == "Middle")
+                                    {
+                                        <a class="btn btn-info btn-xs">Middle</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-warning btn-xs">Low</a>
+                                    }
+                                            }
+                                        </td>
+                                        <td>@ticket.Title</td>
+                                        <td>
+                                            <a href="/User/TicketDetail/@ticket.ID" class="btn btn-xs btn-warning">Show</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
