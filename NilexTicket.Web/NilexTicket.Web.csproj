@@ -127,6 +127,7 @@
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\npatch.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\Ticket\b054458c622449e9a3f11a9402f453da.jpg" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\font-awesome.css" />
@@ -191,9 +192,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\img\Ticket\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

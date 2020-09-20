@@ -89,7 +89,7 @@ MENU STYLES
 
 
 .navbar-cls-top .navbar-brand {
-    background: #28AB80;
+    background: #000;
     color: #fff;
     width: 210px;
     text-align: center;
@@ -100,7 +100,7 @@ MENU STYLES
 }
 
     .navbar-cls-top .navbar-brand:hover {
-        background: #28AB80!important;
+        background: #000 !important;
         color: #fff;
     }
 

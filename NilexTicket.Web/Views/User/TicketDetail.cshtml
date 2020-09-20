@@ -16,8 +16,11 @@
                 <div class="col-md-10">
                     <h3> TICKET ID : @ViewBag.tck.ID - @((bool)ViewBag.tck.Status ? "Open" : "Close")</h3>
                     <hr />
-                    <h4><strong>Subject : </strong>@ViewBag.tck.Title</h4>
+                    <div style="color: cadetblue; float:left; width:66px; margin-right:15px;" class="btn btn-default btn-xs"><strong>Title</strong></div>
+                    <h5>@ViewBag.tck.Title</h5>
                     <hr />
+                    <a style="color: cadetblue; float:left; margin-right:15px;" class="btn btn-default btn-xs"><strong>Comment</strong></a>
+
                     <h5>@ViewBag.tck.Content </h5>
                     <hr>
                     <h5>

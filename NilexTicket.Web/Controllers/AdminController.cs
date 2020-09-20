@@ -156,14 +156,16 @@ namespace NilexTicket.Controllers
         {
             try
             {
-                Ticket cevap = ticketRepository.GetAll().SingleOrDefault(x => x.ID == yrm.Ticket.ID);
+                Ticket cevap = ticketRepository.GetAll().SingleOrDefault(x => x.ID == yrm.TicketID);
                 cevap.IsItRead = true;
 
                 string kl = Session["Admin"] as string;
                 User us = userRepositoty.GetAll().SingleOrDefault(x => x.Username == kl);
                 Comment nYrm = new Comment();
-                nYrm.Ticket.ID = yrm.Ticket.ID;
+                nYrm.Ticket = cevap;
+                nYrm.Ticket.ID = cevap.ID;
                 nYrm.CreateDate = DateTime.Now;
+                nYrm.User = us;
                 nYrm.User.ID = us.ID;
                 nYrm.Explanation = yrm.Explanation;
                 commentRepository.Save(nYrm);
