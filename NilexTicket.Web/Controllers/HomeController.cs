@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using NilexTicket.DB;
 using NilexTicket.DB.Repositories;
 using NilexTicket.DB.Repositories.Interfaces;
+using NilexTicket.Util;
 
 namespace NilexTicket.Controllers
 {
@@ -27,11 +28,37 @@ namespace NilexTicket.Controllers
         [HttpPost]
         public ActionResult Login(User veri)
         {
-            User kisi = userRepositoty.LoadAllUser().SingleOrDefault(x => x.Username == veri.Username & x.Password == veri.Password);
-            if (kisi == null)
+            if (veri == null)
+            {
                 return Json(false);
+            }
+
+            if (veri.Username == "" || string.IsNullOrEmpty(veri.Username))
+            {
+                return Json(false);
+            }
+
+            if (veri.Password == "" || string.IsNullOrEmpty(veri.Password))
+            {
+                return Json(false);
+            }
+
+            User kisi = userRepositoty.LoadAllUser().SingleOrDefault(x => x.Username == veri.Username);
+             
+            if (kisi == null)
+            {
+                return Json(false);
+            }
             else
             {
+
+                var de = DESEncrypt.Decrypt(kisi.Password);
+
+                if (de != veri.Password)
+                {
+                    return Json(false);
+                }
+
                 if (kisi.Role == "Admin")
                 {
                     Session["Admin"] = kisi.Username;
@@ -63,41 +90,57 @@ namespace NilexTicket.Controllers
         {
             try
             {
-                User newticket = new User();
-                newticket.FullName = data.FullName;
-                newticket.Username = data.Username;
-                newticket.Mail = data.Mail;
-                newticket.Password = data.Password;
-                newticket.Role = "User";
-                userRepositoty.Save(newticket);
-                return Json(true);
+                if (data == null)
+                {
+                    return Json(false);
+                }
+
+                if (data.FullName == "" || string.IsNullOrEmpty(data.FullName))
+                {
+                    return Json(false);
+                }
+
+                if (data.Username == "" || string.IsNullOrEmpty(data.Username))
+                {
+                    return Json(false);
+                }
+
+                if (data.Mail == "" || string.IsNullOrEmpty(data.Mail))
+                {
+                    return Json(false);
+                }
+
+                if (data.Password == "" || string.IsNullOrEmpty(data.Password))
+                {
+                    return Json(false);
+                }
+
+                User checkExistUser = userRepositoty.GetAll().Where(u => u.Username == data.Username || u.Mail ==data.Mail).FirstOrDefault();
+
+                if (checkExistUser != null)
+                {
+                    if (checkExistUser.ID > 0)
+                    {
+                        return Json(false);
+                    }
+                }
+                else
+                {
+                    User newticket = new User();
+                    newticket.FullName = data.FullName;
+                    newticket.Username = data.Username;
+                    newticket.Mail = data.Mail;
+                    newticket.Password = DESEncrypt.Encrypt(data.Password);
+                    newticket.Role = "User";
+                    userRepositoty.Save(newticket);
+                    return Json(true);
+                }
             }
             catch (Exception)
             {
-                return Json(false);
             }
-        }
 
-        public ActionResult UserCheckIt(string Username)
-        {
-            User user = userRepositoty.GetAll().Where(u => u.Username == Username).FirstOrDefault();
-            if (user != null)
-            {
-                return Json(true);
-            }
-            else
-            {
-                return Json(false);
-            }
-        }
-        public ActionResult EmailCheckIt(string gelenMail)
-        {
-            User mail = userRepositoty.GetAll().SingleOrDefault(x => x.Mail == gelenMail);
-            if (mail != null)
-                return Json(true);
-            else
-                return Json(false);
-
+            return Json(false);
         }
     }
 }

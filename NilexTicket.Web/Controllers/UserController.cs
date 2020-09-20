@@ -9,6 +9,7 @@ using NilexComment.DB.Repositories;
 using NilexTicket.DB;
 using NilexTicket.DB.Repositories;
 using NilexTicket.DB.Repositories.Interfaces;
+using NilexTicket.Util;
 
 namespace NilexTicket.Controllers
 {
@@ -179,21 +180,61 @@ namespace NilexTicket.Controllers
         }
 
         [HttpPost]
-        public JsonResult Settings(UserViewModel mdl)
+        public JsonResult Settings(UserViewModel usrGelen)
         {
             JsonModel Jmodel = new JsonModel();
             try
             {
-                string sr = Session["User"] as string;
-                User usr = userRepositoty.GetAll().SingleOrDefault(x => x.Username == sr);
-                usr.FullName = mdl.FullName;
-                usr.Username = mdl.Username;
-                usr.Password = mdl.Password;
-                usr.Mail = mdl.Mail;
-                userRepositoty.Save(usr);
+                try
+                {
+                    if (usrGelen == null)
+                    {
+                        return Json(false);
+                    }
 
-                Jmodel.IsSuccess = true;
-                Jmodel.Message = "Update successful";
+                    if (usrGelen.FullName == "" || string.IsNullOrEmpty(usrGelen.FullName))
+                    {
+                        return Json(false);
+                    }
+
+                    if (usrGelen.Username == "" || string.IsNullOrEmpty(usrGelen.Username))
+                    {
+                        return Json(false);
+                    }
+
+                    if (usrGelen.Mail == "" || string.IsNullOrEmpty(usrGelen.Mail))
+                    {
+                        return Json(false);
+                    }
+
+                    if (usrGelen.Password == "" || string.IsNullOrEmpty(usrGelen.Password))
+                    {
+                        return Json(false);
+                    }
+
+                    User checkExistUser = userRepositoty.GetAll().Where(u => u.Username == usrGelen.Username).FirstOrDefault();
+
+                    if (checkExistUser == null)
+                    {
+                        return Json(false);
+                    }
+                    else
+                    {
+                        string sr = Session["User"] as string;
+						User usrUpdated = userRepositoty.GetAll().SingleOrDefault(x => x.Username == sr);
+                        usrUpdated.FullName = usrGelen.FullName;
+                        usrUpdated.Username = usrGelen.Username;
+                        usrUpdated.Mail = usrGelen.Mail;
+                        usrUpdated.Password = DESEncrypt.Encrypt(usrGelen.Password);
+                        usrUpdated.Role = "User";
+                        userRepositoty.Save(usrUpdated); 
+						Jmodel.IsSuccess = true;
+						Jmodel.Message = "Update successful";
+                    }
+                }
+                catch (Exception)
+                {
+                }
             }
             catch (Exception ex)
             {

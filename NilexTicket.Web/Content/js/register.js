@@ -1,49 +1,4 @@
 ﻿$(document).ready(function () {
-    $("#Username").blur(function () {
-        var kul = $(this).val()
-        if (kul != "") {
-            $.ajax({
-                type: 'POST',
-                url: '/Home/UserCheckIt?Username=' + kul,
-                success: function (sonuc) {
-                    if (sonuc) {
-                        $("#Username").css("border-color", "red")
-                        showErrorMessage("Exist username, please chose another username");
-                    }
-                    else {
-                        $("#Username").css("border-color", "#00ff90")
-                    }
-                },
-                error: function () {
-
-                }
-            })
-        }
-        else {
-            $(this).css("border-color", "#ccc")
-        }
-    })
-
-    $("#Mail").blur(function () {
-        var mail = $(this).val();
-        if (mail != "") {
-            $.ajax({
-                type: 'POST',
-                url: '/Home/EmailCheckIt?gelenMail=' + mail,
-                success: function (sonuc) {
-                    if (sonuc) {
-                        $("#Mail").css("border-color", "red");
-                        showErrorMessage("Exist mail, please chose another mail");
-                    }
-                    else {
-                        $("#Mail").css("border-color", "#00ff90")
-                    }
-                }
-            })
-        }
-        else $("#Mail").css("border-color", "#ccc")
-    })
-
     $("#Password").blur(function () {
         var ps1 = $("#Password").val();
         if (ps1 != "") {

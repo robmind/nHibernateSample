@@ -8,6 +8,7 @@ using NilexComment.DB.Repositories;
 using NilexTicket.DB;
 using NilexTicket.DB.Repositories;
 using NilexTicket.DB.Repositories.Interfaces;
+using NilexTicket.Util;
 
 namespace NilexTicket.Controllers
 {
@@ -193,15 +194,58 @@ namespace NilexTicket.Controllers
             JsonModel jmodel = new JsonModel();
             try
             {
-                User usrUpdated = new User();
-                usrUpdated.FullName = usrGelen.FullName;
-                usrUpdated.Username = usrGelen.Username;
-                usrUpdated.Password = usrGelen.Password;
-                usrUpdated.Role = "User";
-                usrUpdated.Mail = usrGelen.Mail;
-                userRepositoty.Save(usrUpdated);
-                jmodel.IsSuccess = true;
-                jmodel.Message = "Admin";
+                try
+                {
+                    if (usrGelen == null)
+                    {
+                        return Json(false);
+                    }
+
+                    if (usrGelen.FullName == "" || string.IsNullOrEmpty(usrGelen.FullName))
+                    {
+                        return Json(false);
+                    }
+
+                    if (usrGelen.Username == "" || string.IsNullOrEmpty(usrGelen.Username))
+                    {
+                        return Json(false);
+                    }
+
+                    if (usrGelen.Mail == "" || string.IsNullOrEmpty(usrGelen.Mail))
+                    {
+                        return Json(false);
+                    }
+
+                    if (usrGelen.Password == "" || string.IsNullOrEmpty(usrGelen.Password))
+                    {
+                        return Json(false);
+                    }
+
+                    User checkExistUser = userRepositoty.GetAll().Where(u => u.Username == usrGelen.Username || u.Mail == usrGelen.Mail).FirstOrDefault();
+
+                    if (checkExistUser != null)
+                    {
+                        if (checkExistUser.ID > 0)
+                        {
+                            return Json(false);
+                        }
+                    }
+                    else
+                    {
+                        User usrUpdated = new User();
+                        usrUpdated.FullName = usrGelen.FullName;
+                        usrUpdated.Username = usrGelen.Username;
+                        usrUpdated.Mail = usrGelen.Mail;
+                        usrUpdated.Password = DESEncrypt.Encrypt(usrGelen.Password);
+                        usrUpdated.Role = "User";
+                        userRepositoty.Save(usrUpdated);
+                        jmodel.IsSuccess = true;
+                        jmodel.Message = "Admin";
+                    }
+                }
+                catch (Exception)
+                {
+                }
             }
             catch (Exception ex)
             {
@@ -227,7 +271,7 @@ namespace NilexTicket.Controllers
                 User usrUpdated = userRepositoty.GetAll().SingleOrDefault(x => x.ID == usrGelen.ID);
                 usrUpdated.FullName = usrGelen.FullName;
                 usrUpdated.Username = usrGelen.Username;
-                usrUpdated.Password = usrGelen.Password;
+                usrUpdated.Password = DESEncrypt.Encrypt(usrGelen.Password);
                 usrUpdated.Mail = usrGelen.Mail;
                 userRepositoty.Save(usrUpdated);
                 jmodel.IsSuccess = true;

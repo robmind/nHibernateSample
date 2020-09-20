@@ -1,9 +1,11 @@
-﻿@{
+﻿
+@using NilexTicket.Util
+@model NilexTicket.ModelView.UserViewModel
+@{
     ViewBag.Title = "UserEdit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string upass = DESEncrypt.Decrypt(Model.Password);
 }
-@model NilexTicket.ModelView.UserViewModel
-
 <script src="~/Content/js/jquery.validate.min.js"></script>
 <script src="~/Content/js/jquery.validate.unobtrusive.min.js"></script>
 <script src="~/Content/js/jquery.unobtrusive-ajax.min.js"></script>
@@ -27,13 +29,13 @@
                         @Html.TextBoxFor(x => x.FullName, new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.FullName, "", new { @class = "text-danger" })    <br />
                         @Html.LabelFor(x => x.Username)
-                        @Html.TextBoxFor(x => x.Username, new { @class = "form-control" })
+                        @Html.TextBoxFor(x => x.Username, new { @class = "form-control", @readonly = "readonly" })
                         @Html.ValidationMessageFor(x => x.Username, "", new { @class = "text-danger" })    <br />
                         @Html.LabelFor(x => x.Password)
-                        @Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
+                        @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @Value = @upass })
                         @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })    <br />
                         @Html.LabelFor(x => x.Mail)
-                        @Html.TextBoxFor(x => x.Mail, new { @class = "form-control" })
+                        @Html.TextBoxFor(x => x.Mail, new { @class = "form-control", @readonly = "readonly" })
                         @Html.ValidationMessageFor(x => x.Mail, "", new { @class = "text-danger" })    <br />
                         <br />
                         <input type="text" name="ID" id="ID" value="@Model.ID" hidden/>
