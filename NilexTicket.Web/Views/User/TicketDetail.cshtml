@@ -18,15 +18,17 @@
                     <hr />
                     <h4><strong>Subject : </strong>@ViewBag.tck.Title</h4>
                     <hr />
+                    <h5>@ViewBag.tck.Content </h5>
+                    <hr>
                     <h5>
-                        <strong>
-                            Attachment : @if (ViewBag.tck.ImageUrl != null)
-                            {
-                                <a href='@ViewBag.tck.ImageUrl' target='_blank'>File</a>
-                            }
-                        </strong>
-                        <br /><br />
-                        @ViewBag.tck.Content
+                        @if (ViewBag.tck.ImageUrl != null)
+                        {
+                            <strong>Attachment : </strong>
+                            <br />
+                            <br />
+                            <img alt="#" src="@ViewBag.tck.ImageUrl" style="width: 300px; height: 250px; "/>
+                        }
+                        <br />
                     </h5>
                     <hr>
                 </div>
@@ -89,6 +91,7 @@
     function CommentAdd() {
         if ($("#Explanation").val() != "") {
             var dt = $("form").serializeArray();
+            $("#overlay").fadeIn(300);
             $.ajax({
                 url: '/User/AddComment/',
                 data: dt,
@@ -111,9 +114,11 @@
                         $("#Explanation").val("");
                         sayac++;
                     }
+                    $("#overlay").fadeOut(300);
                 },
                 error: function () {
-                    alert("An error occurred while adding a comment");
+                    showErrorMessage("An error occurred while adding a comment"); 
+                    $("#overlay").fadeOut(300);
                 }
             });
 

@@ -7,7 +7,9 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="page-head-line">User Management</h1>
+            <a href="~/Admin/UserCreate" class="btn btn-info" style="margin-bottom:2px">Create New User</a>
         </div>
+        
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -40,7 +42,7 @@
                                 <td>@kul.Mail</td>
                                 <td>
                                     <a href="~/Admin/UserEdit/@kul.ID" class="btn btn-xs btn-info" style="margin-bottom:2px">Edit</a>
-                                    <input type="button" value="Sil" onclick="userDelete(@kul.ID)" class="btn btn-xs btn-danger">
+                                    <input type="button" value="Delete" onclick="userDelete(@kul.ID)" class="btn btn-xs btn-danger">
                                 </td>
                             </tr>
                         }
@@ -52,27 +54,47 @@
 </div>
 <script>
     function userDelete(id) {
-        if (!confirm("Emin misiniz ?")) return;
-        $.ajax({
-            type: 'POST',
-            url: '/Admin/userDelete?id=' + id,
-            success: function (result) {
-                if (result.IsSuccess) {
-                    $("#tr-" + id).fadeOut().remove();
-                }
-                else {
-                    $("#Message").fadeIn("fast").html(result.Message);
-                    setTimeout(function () {
-                        $("#Message").slideUp("fast")
-                    }, 5000);
-                }
-            },
-            error: function(){
-                $("#Message").fadeIn("fast").html("Bilinmeyen bir hata oluştu");
-                setTimeout(function () {
-                    $("#Message").slideUp("fast")
-                }, 5000);
-            }
-        });
+
+        swal({
+                title: "Are you sure?",
+                text: "Once deleted, check user tickets!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $("#overlay").fadeIn(300);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Admin/userDelete?id=' + id,
+                        success: function (result) {
+                            if (result.IsSuccess) {
+                                $("#tr-" + id).fadeOut().remove();
+                            }
+                            else {
+                                //$("#Message").fadeIn("fast").html(result.Message);
+                                showSuccessMessage(result.Message);
+                                setTimeout(function () {
+                                    $("#Message").slideUp("fast")
+                                }, 5000);
+                            }
+                            $("#overlay").fadeOut(300);
+                        },
+                        error: function(){
+                            //$("#Message").fadeIn("fast").html("An unknown error has occurred");
+                            showErrorMessage("An unknown error has occurred");
+                            setTimeout(function () {
+                                $("#Message").slideUp("fast")
+                            }, 5000);
+                            $("#overlay").fadeOut(300);
+                        }
+                    });
+                }  
+            });
+
+
+
+        
     }
 </script>

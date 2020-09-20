@@ -5,7 +5,7 @@ $(document).ready(function () {
         var bosmu = false;
         $.each(veri, function (i, field) {
             if (field.value == "") {
-                $("#login-mesaj").fadeIn("slow").html("Boş alanları doldurunuz")
+                showErrorMessage("Fill in the blank fields")
                 bosmu = true;
                 setTimeout(function () {
                     $("#login-mesaj").slideUp("fast")
@@ -13,6 +13,7 @@ $(document).ready(function () {
             }
         })
         if (!bosmu) {
+            $("#overlay").fadeIn(300);
             $.ajax({
                 type: 'POST',
                 data: veri,
@@ -25,11 +26,12 @@ $(document).ready(function () {
                         location.href = "/User/Index"
                     }
                     else {
-                        $("#login-mesaj").fadeIn("slow").html("User veya Password yanlış")
+                        showErrorMessage("User or Password is incorrect")
                         setTimeout(function () {
                             $("#login-mesaj").slideUp("fast")
                         }, 3000)
                     }
+                    $("#overlay").fadeOut(300);
                 }
             })
         }

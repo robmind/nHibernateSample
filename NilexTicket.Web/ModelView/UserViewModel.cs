@@ -9,23 +9,23 @@ namespace NilexTicket.ModelView
 {
     public class UserViewModel
     {
-        [Required(ErrorMessage = "User adınızı girmediniz")]
-        [StringLength(100, ErrorMessage = "User adınız 100 karakterden fazla olamaz")]
+        [Required(ErrorMessage = "You did not enter your user name")]
+        [StringLength(100, ErrorMessage = "Your user name cannot exceed 100 characters.")]
         [Display(Name = "Username")]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "Adınızı girmediniz")]
-        [StringLength(30, ErrorMessage = "Adınız 30 karakterden fazla olamaz")]
+        [Required(ErrorMessage = "You did not enter your name")]
+        [StringLength(30, ErrorMessage = "Your name cannot exceed 30 characters.")]
         [Display(Name = "Fullname")]
         public string FullName { get; set; }
 
-        [Required(ErrorMessage = "Şifrenizi girmediniz")]
-        [StringLength(20, ErrorMessage = "Şifreniz 20 karakterden fazla olamaz")]
+        [Required(ErrorMessage = "You did not enter your password")]
+        [StringLength(20, ErrorMessage = "Your password cannot exceed 20 characters.")]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Email'inizi girmediniz")]
-        [StringLength(100, ErrorMessage = "Email'iniz 100 karakterden fazla olamaz")]
+        [Required(ErrorMessage = "You did not enter your email")]
+        [StringLength(100, ErrorMessage = "Your email cannot exceed 100 characters.")]
         [Display(Name = "Email")]
         public string Mail { get; set; }
 

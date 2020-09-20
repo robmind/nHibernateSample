@@ -1,4 +1,5 @@
 ﻿function openCloseButton(a) {
+    $("#overlay").fadeIn(300);
     $.ajax({
         url: '/User/TicketStatusu?id=' + a,
         method: 'POST',
@@ -13,10 +14,11 @@
                 $("#btnStatus-" + a).addClass("btn-success")
                 $("#btnStatus-" + a).text("Close")
             }
-
+            $("#overlay").fadeOut(300);
         },
         error: function () {
-            alert("hata")
+            showErrorMessage("Error")
+            $("#overlay").fadeOut(300);
         }
     });
 }

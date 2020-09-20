@@ -9,106 +9,78 @@
     <title>Register</title>
     <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/css/style.css" rel="stylesheet" />
-    <link href="~/Content/Bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Content/Bootstrap/js/bootstrap.min.js"></script>
-    <script src="~/Content/js/register.js"></script>
-
+    <link href="~/Content/css/npatch.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-1.10.2.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/jquery.validate.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
-    <div id="wrapper" style="background-color:#fff">
-        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0 ; background-color:#333">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">
-                    Ticket System
-                </a>
+<div id="wrapper" style="background-color:#fff">
+    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0 ; background-color:#333">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                Ticket System
+            </a>
+        </div>
+        <span style="color:#efeaea;text-indent:10px;line-height:1.8">
+            <br>
+            &nbsp;&nbsp;  
+        </span>
+    </nav>
+    <div id="page-wrapper" class="page-wrapper-cls">
+        <div id="page-inner">
+            <div class="col-md-12">
+                <h4 class="page-head-line">Register</h4>
             </div>
-            <span style="color:#efeaea;text-indent:10px;line-height:1.8">
-                <br>
-                &nbsp;&nbsp;  
-            </span>
-        </nav>
-        <div id="page-wrapper" class="page-wrapper-cls">
-            <div id="page-inner">
-                <div class="col-md-12">
-                    <h4 class="page-head-line">Üye Ol</h4>
-                </div>
-                <div class="row">
-                    <form action="/Home/Register/" method="post" id="kayit_form" onsubmit="return false">
-                        <div class="form-group">
-                            <div class="col-md-6">
-                                <label>Fullname</label>
-                                <input type="text" class="form-control" name="FullName" id="FullName" required>
-                                <label>Username</label>
-                                <input type="text" class="form-control" name="Username" id="Username" required>
-                                <label>Email Address</label>
-                                <input type="email" class="form-control" name="Mail" id="Mail" required>
-                            </div>
+            <div class="row">
+                <form action="/Home/Register/" id="registerform" method="post" name="registerform" class="form" role="form" novalidate="novalidate">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <label>Fullname</label>
+                            <input type="text" class="form-control" name="FullName" id="FullName" placeholder="" spellcheck="false" required autocomplete="off"  required>
+                            <label>Username</label>
+                            <input type="text" class="form-control" name="Username" id="Username" placeholder="" spellcheck="false" required autocomplete="off"  required>
+                            <label>Email Address</label>
+                            <input type="email" class="form-control" name="Mail" id="Mail" placeholder="" spellcheck="false" required autocomplete="off"  required>
                         </div>
-                        <div class="form-group" style="clear:both">
-                            <div class="col-md-3">
-                                <label>Password</label>
-                                <input type="password" class="form-control" name="Password" id="Password" required>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Confirm Password</label>
-                                <input type="password" class="form-control" name="pass2" id="pass2" required>
-                            </div>
+                    </div>
+                    <div class="form-group" style="clear: both">
+                        <div class="col-md-3">
+                            <label>Password</label>
+                            <input type="password" class="form-control" name="Password" id="Password" placeholder="" spellcheck="false" required autocomplete="off"  required>
                         </div>
-                        <div class="form-group" style="clear:both">
-                            <div class="col-md-2">
-                                <label>Day </label>
-                                <select class="form-control" name="day" id="day">
-                                    <option selected="">Choose</option>
-                                    @for (int i = 1; i < 32; i++)
-                                    {
-                                        <option value="@i">@i</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Month </label>
-                                <select class="form-control" name="month" id="month">
-                                    <option selected="">Choose</option>
-                                    @for (int i = 1; i <= 12; i++)
-                                    {
-                                        <option value="@i">@i</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Year </label>
-                                <select class="form-control" name="year" id="year">
-                                    <option selected="">Choose</option>
-                                    @for (int i = 1920; i <= DateTime.Now.Year - 10; i++)
-                                    {
-                                        <option value="@i">@i</option>
-                                    }
-                                </select>
-                            </div>
-                            <input name="Birthdate" id="Birthdate" value="" hidden/>
+                        <div class="col-md-3">
+                            <label>Confirm Password</label>
+                            <input type="password" class="form-control" name="pass2" id="pass2" placeholder="" spellcheck="false" required autocomplete="off"  required>
                         </div>
-                        <div class="form-group" style="clear:both">
-                            <div class=" col-md-6">
-                                <input type="button" id="btn-kaydoll" class="btn btn-primary" onclick="Kayit()" value="Register">
-                                <a class="btn btn-danger" id="btn-hesapvar" href="~/Home/Login/">Already Have An Account</a>
-                            </div>
+                    </div>
+                    <div class="form-group" style="clear: both">
+                        <div class=" col-md-6">
+                            <input type="submit" id="btnCreate" class="btn btn-primary" value="Register">
+                            <a class="btn btn-danger" id="btn-hesapvar" href="~/Home/Login/">Already Have An Account</a>
                         </div>
-                        <br />
-                        <div class="form-group" style="clear:both" hidden="hidden" id="eksik-Message">
-                            <div class="alert alert-danger col-md-6">
-                                <strong> * Please correct them first!</strong>
-                            </div>
+                    </div>
+                    <br/>
+                    <div class="form-group" style="clear: both" hidden="hidden" id="eksik-Message">
+                        <div class="alert alert-danger col-md-6">
+                            <strong> * Please correct them first!</strong>
                         </div>
-                    </form>
+                    </div>
+                </form>
 
-                </div>
             </div>
         </div>
     </div>
-    <footer style="clear:both;">
-         
-    </footer>
+</div>
+<script src="~/Content/js/register.js"></script>
+<script src="~/Content/js/custom.js"></script>
+
+<div id="overlay">
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
+</div>
 </body>
 </html>

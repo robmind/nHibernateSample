@@ -124,37 +124,60 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Bootstrap\css\bootstrap.css" />
-    <Content Include="Content\Bootstrap\css\bootstrap.min.css" />
-    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\Bootstrap\js\bootstrap.js" />
-    <Content Include="Content\Bootstrap\js\bootstrap.min.js" />
-    <Content Include="Content\Bootstrap\js\npm.js" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\npatch.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\font-awesome.css" />
-    <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\icons\add-icon.png" />
+    <Content Include="Content\icons\android-icon-144x144.png" />
+    <Content Include="Content\icons\android-icon-192x192.png" />
+    <Content Include="Content\icons\android-icon-36x36.png" />
+    <Content Include="Content\icons\android-icon-48x48.png" />
+    <Content Include="Content\icons\android-icon-72x72.png" />
+    <Content Include="Content\icons\android-icon-96x96.png" />
+    <Content Include="Content\icons\apple-icon-114x114.png" />
+    <Content Include="Content\icons\apple-icon-120x120.png" />
+    <Content Include="Content\icons\apple-icon-144x144.png" />
+    <Content Include="Content\icons\apple-icon-152x152.png" />
+    <Content Include="Content\icons\apple-icon-180x180.png" />
+    <Content Include="Content\icons\apple-icon-57x57.png" />
+    <Content Include="Content\icons\apple-icon-60x60.png" />
+    <Content Include="Content\icons\apple-icon-72x72.png" />
+    <Content Include="Content\icons\apple-icon-76x76.png" />
+    <Content Include="Content\icons\apple-icon-precomposed.png" />
+    <Content Include="Content\icons\apple-icon.png" />
+    <Content Include="Content\icons\browserconfig.xml" />
     <Content Include="Content\icons\delete-icon.png" />
+    <Content Include="Content\icons\favicon-16x16.png" />
+    <Content Include="Content\icons\favicon-32x32.png" />
+    <Content Include="Content\icons\favicon-96x96.png" />
+    <Content Include="Content\icons\favicon.ico" />
     <Content Include="Content\icons\information-icon.png" />
+    <Content Include="Content\icons\ms-icon-144x144.png" />
+    <Content Include="Content\icons\ms-icon-150x150.png" />
+    <Content Include="Content\icons\ms-icon-310x310.png" />
+    <Content Include="Content\icons\ms-icon-70x70.png" />
     <Content Include="Content\icons\success-icon.png" />
     <Content Include="Content\js\adminPanel.js" />
+    <Content Include="Content\js\custom.js" />
     <Content Include="Content\js\openCloseButton.js" />
     <Content Include="Content\js\setAccount.js" />
     <Content Include="Content\js\login.js" />
     <Content Include="Content\js\newTicket.js" />
     <Content Include="Content\js\register.js" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\Bootstrap\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <Content Include="Scripts\jquery-ui.js" />
-    <Content Include="Scripts\jquery-ui.min.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\js\jquery-1.10.2.min.js" />
+    <Content Include="Content\js\jquery-ui.min.js" />
+    <Content Include="Content\js\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Content\js\jquery.validate.min.js" />
+    <Content Include="Content\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -209,9 +232,6 @@
     <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\User\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +242,12 @@
       <Project>{784872d4-9f1b-4edd-acb2-77cea74a7761}</Project>
       <Name>NilexTicket.DB</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Admin\UserCreate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\icons\manifest.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

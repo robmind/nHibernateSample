@@ -4,7 +4,6 @@
 		<id name="ID" access="property" column="`ID`">
 			<generator class="native" />
 		</id>
-		<property name="Birthdate" type="String" column="`Birthdate`" length="50"  lazy ="false"/>
 		<property name="FullName" type="String" column="`FullName`" length="30"  lazy ="false"/>
 		<property name="Mail" type="String" column="`Mail`" length="100"  lazy ="false"/>
 		<property name="Password" type="String" column="`Password`" length="20"  lazy ="false"/>

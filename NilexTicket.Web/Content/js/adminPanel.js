@@ -1,5 +1,6 @@
 ﻿function AdminDelete(id) {
     if (id != null & confirm("Are you sure you want to deauthorize?")) {
+        $("#overlay").fadeIn(300);
         $.ajax({
             method: 'POST',
             url: '/Admin/AdminDelete?id=' + id,
@@ -12,19 +13,21 @@
                         )
                 }
                 else {
-                    $("#mesaj").html(sonuc.Mesaj)
+                    showErrorMessage(sonuc.Mesaj)
                     $("#mesaj").fadeIn("fast")
                     setTimeout(function () {
                         $("#mesaj").slideUp("slow")
                     }, 3000)
                 }
+                $("#overlay").fadeOut(300);
             },
             error: function () {
-                $("#mesaj").html("An unknown error has occurred")
+                showErrorMessage("An unknown error has occurred")
                 $("#mesaj").fadeIn("fast")
                 setTimeout(function () {
                     $("#mesaj").slideUp("slow")
                 }, 3000)
+                $("#overlay").fadeOut(300);
             }
         })
     }
@@ -38,6 +41,7 @@ function GivePermission() {
         }, 2000)
     }
     else if (confirm("All tickets and comments of this user will be deleted. Do you confirm?")) {
+        $("#overlay").fadeIn(300);
         $.ajax({
             method: 'POST',
             url: '/Admin/GivePermission?id=' + id,
@@ -49,7 +53,7 @@ function GivePermission() {
                                         "<td>" + id + "</td>" +
                                         "<td id='kulAdi-" + id + "' style='width:300px'>" + kulAdi + "</td>" +
                                         "<td>" +
-    "<input type='button' id='btn-" + id + "' class='btn btn-danger btn-xs' onclick='AdminDelete(" + id + ")' value='Kaldır'>" +
+                                                 "<input type='button' id='btn-" + id + "' class='btn btn-danger btn-xs' onclick='AdminDelete(" + id + ")' value='Remove'>" +
                                         "</td>" +
                         "</tr>"
                     )
@@ -57,17 +61,19 @@ function GivePermission() {
                     $("#op-" + id).remove();
                 }
                 else {
-                    $("#announcement").fadeIn("fast").html(result.Mesaj)
+                    showErrorMessage(result.Mesaj)
                     setTimeout(function () {
                         $("#announcement").slideUp("slow")
                     }, 3000)
                 }
+                $("#overlay").fadeOut(300);
             },
             error: function () {
-                $("#announcement").fadeIn("fast").html("An unknown error has occurred")
+                showErrorMessage("An unknown error has occurred")
                 setTimeout(function () {
                     $("#announcement").slideUp("slow")
                 }, 3000)
+                $("#overlay").fadeOut(300);
             }
         })
     }

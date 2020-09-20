@@ -68,7 +68,6 @@ namespace NilexTicket.Controllers
                 newticket.Username = data.Username;
                 newticket.Mail = data.Mail;
                 newticket.Password = data.Password;
-                newticket.Birthdate = data.Birthdate;
                 newticket.Role = "User";
                 userRepositoty.Save(newticket);
                 return Json(true);
@@ -79,7 +78,7 @@ namespace NilexTicket.Controllers
             }
         }
 
-        public ActionResult UserKontrolEt(string Username)
+        public ActionResult UserCheckIt(string Username)
         {
             User user = userRepositoty.GetAll().Where(u => u.Username == Username).FirstOrDefault();
             if (user != null)
@@ -91,7 +90,7 @@ namespace NilexTicket.Controllers
                 return Json(false);
             }
         }
-        public ActionResult EmailKontrolEt(string gelenMail)
+        public ActionResult EmailCheckIt(string gelenMail)
         {
             User mail = userRepositoty.GetAll().SingleOrDefault(x => x.Mail == gelenMail);
             if (mail != null)

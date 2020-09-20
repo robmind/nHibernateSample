@@ -62,17 +62,6 @@ namespace NilexTicket.DB
             set;
         }
 
-    
-        /// <summary>
-        /// There are no comments for Birthdate in the schema.
-        /// </summary>
-        public virtual string Birthdate
-        {
-            get; 
-            set;
-        }
-
-    
         /// <summary>
         /// There are no comments for Role in the schema.
         /// </summary>

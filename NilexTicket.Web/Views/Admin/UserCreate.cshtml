@@ -1,0 +1,43 @@
+﻿@{ ViewBag.Title = "UserCreate";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<script src="~/Content/js/jquery.validate.min.js"></script>
+<script src="~/Content/js/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Content/js/jquery.unobtrusive-ajax.min.js"></script>
+
+<div id="page-inner">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-head-line">User Create</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="mesage" class="alert alert-info" style="margin-top:10px" hidden>
+                        Create successful
+                    </div>
+                    <form action="/Admin/UserCreate" id="registerform" method="post">
+                        <label for="FullName">Fullname</label>
+                        <input class="form-control" data-val="true" data-val-length-max="30" id="FullName" name="FullName" required type="text" />
+                        <br />
+                        <label for="Username">Username</label>
+                        <input class="form-control" data-val="true" data-val-length-max="100" id="Username" name="Username" required type="text" />
+                        <br />
+                        <label for="Password">Password</label>
+                        <input class="form-control" data-val="true" data-val-length-max="20" id="Password" name="Password" required type="text" />
+                        <br />
+                        <label for="Mail">Email</label>
+                        <input class="form-control" data-val="true" data-val-length-max="100" id="Mail" name="Mail" required type="text" />
+                        <br />
+
+                        <input type="button" id="btnCreate" class="btn btn-primary" onclick="Register()" value="Create">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Content/js/register.js"></script>

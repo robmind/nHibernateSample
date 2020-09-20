@@ -72,7 +72,7 @@ namespace NilexTicket.Controllers
             catch (Exception ex)
             {
                 Jmodel.IsSuccess = false;
-                Jmodel.Message = "Hata : " + ex.Message;
+                Jmodel.Message = "Error : " + ex.Message;
             }
             return Json(Jmodel, JsonRequestBehavior.AllowGet);
         }
@@ -112,7 +112,7 @@ namespace NilexTicket.Controllers
             catch (Exception ex)
             {
                 jmodel.IsSuccess = false;
-                jmodel.Message = "Hata : " + ex.Message;
+                jmodel.Message = "Error : " + ex.Message;
             }
             return Json(jmodel, JsonRequestBehavior.AllowGet);
         }
@@ -179,34 +179,66 @@ namespace NilexTicket.Controllers
         {
             return View(userRepositoty.GetAll().Where(x => x.Role == "User").ToList().OrderBy(y => y.ID));
         }
-        public ActionResult UserEdit(int id)
+
+        public ActionResult UserCreate()
         {
-            var usr = userRepositoty.GetAll().SingleOrDefault(x => x.ID == id);
-            UserViewModel uvm = usr;
-            return View(uvm);
+            return View();
         }
+
         [HttpPost]
-        public JsonResult UserEdit(UserViewModel usrGelen)
+        public JsonResult UserCreate(UserViewModel usrGelen)
         {
             JsonModel jmodel = new JsonModel();
             try
             {
-                User usrGuncellenecek = userRepositoty.GetAll().SingleOrDefault(x => x.ID == usrGelen.ID);
-                usrGuncellenecek.FullName = usrGelen.FullName;
-                usrGuncellenecek.Username = usrGelen.Username;
-                usrGuncellenecek.Password = usrGelen.Password;
-                usrGuncellenecek.Mail = usrGelen.Mail;
-                userRepositoty.Save(usrGuncellenecek);
+                User usrUpdated = new User();
+                usrUpdated.FullName = usrGelen.FullName;
+                usrUpdated.Username = usrGelen.Username;
+                usrUpdated.Password = usrGelen.Password;
+                usrUpdated.Role = "User";
+                usrUpdated.Mail = usrGelen.Mail;
+                userRepositoty.Save(usrUpdated);
                 jmodel.IsSuccess = true;
                 jmodel.Message = "Admin";
             }
             catch (Exception ex)
             {
                 jmodel.IsSuccess = false;
-                jmodel.Message = "Hata : " + ex.Message;
+                jmodel.Message = "Error : " + ex.Message;
             }
             return Json(jmodel, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult UserEdit(int id)
+        {
+            var usr = userRepositoty.GetAll().SingleOrDefault(x => x.ID == id);
+            UserViewModel uvm = usr;
+            return View(uvm);
+        }
+
+        [HttpPost]
+        public JsonResult UserEdit(UserViewModel usrGelen)
+        {
+            JsonModel jmodel = new JsonModel();
+            try
+            {
+                User usrUpdated = userRepositoty.GetAll().SingleOrDefault(x => x.ID == usrGelen.ID);
+                usrUpdated.FullName = usrGelen.FullName;
+                usrUpdated.Username = usrGelen.Username;
+                usrUpdated.Password = usrGelen.Password;
+                usrUpdated.Mail = usrGelen.Mail;
+                userRepositoty.Save(usrUpdated);
+                jmodel.IsSuccess = true;
+                jmodel.Message = "Admin";
+            }
+            catch (Exception ex)
+            {
+                jmodel.IsSuccess = false;
+                jmodel.Message = "Error : " + ex.Message;
+            }
+            return Json(jmodel, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult userDelete(int id)
         {
@@ -241,7 +273,7 @@ namespace NilexTicket.Controllers
             catch (Exception ex)
             {
                 jmodel.IsSuccess = false;
-                jmodel.Message = "Hata : " + ex.Message;
+                jmodel.Message = "Error : " + ex.Message;
             }
             return Json(jmodel, JsonRequestBehavior.AllowGet);
         }

@@ -63,7 +63,7 @@ namespace NilexTicket.DB
             set;
         }
 
-        public int Ticket_ID { get; set; }
+        public int TicketID { get; set; }
         public int User_ID { get; set; }
     }
 

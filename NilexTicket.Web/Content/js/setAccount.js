@@ -9,14 +9,16 @@ function success(myresult) {
         }, 3000)
         if (ilk_kul != kadi & myresult.Mesaj != "Admin") {
             ilk_kul = kadi;
+            $("#overlay").fadeIn(300);
             $.ajax({
                 method: 'POST',
                 url: '/Home/UserDegisti?kadi='+ kadi
             })
+            $("#overlay").fadeOut(300);
         }
     }
     else {
-        $("#mesage").text(myresult.Mesaj)
+        showErrorMessage(myresult.Mesaj)
         $("#mesage").removeClass("alert-info")
         $("#mesage").addClass("alert-danger")
         $("#mesage").fadeIn("fast")
@@ -26,32 +28,32 @@ function success(myresult) {
     }
 }
 function fail() {
-    alert("Something went wrong")
+    showErrorMessage("Something went wrong")
 }
 
-
-var yeniUser = true;
-var yeniEmail = true;
-/*User kontrol*/
+var newUser = true;
+var newEmail = true;
 
 $(document).ready(function () {
     $("#Username").blur(function () {
         var kul = $(this).val()
         if (kul != "") {
+            $("#overlay").fadeIn(300);
             $.ajax({
                 type: 'POST',
-                url: '/Home/UserKontrolEt?Username=' + kul,
+                url: '/Home/UserCheckIt?Username=' + kul,
                 success: function (result) {
                     if (result & kul != ilk_kul) {
                         $("#Username").css("border-color", "red")
-                        yeniUser = false;
+                        newUser = false;
                     }
                     else {
                         $("#Username").css("border-color", "#00ff90")
-                        yeniUser = true;
+                        newUser = true;
                     }
                 }
             })
+            $("#overlay").fadeOut(300);
         }
         else {
             $(this).css("border-color", "#ccc")
@@ -59,25 +61,27 @@ $(document).ready(function () {
     })
 })
 
-/*Email kontrol*/
 var ilk_mail = $("#Mail").val();
 
 $(document).ready(function () {
     $("#Mail").blur(function () {
         var mail = $(this).val();
         if (mail != "") {
+            $("#overlay").fadeIn(300);
             $.ajax({
                 type: 'POST',
-                url: '/Home/EmailKontrolEt?gelenMail=' + mail,
+                url: '/Home/EmailCheckIt?gelenMail=' + mail,
                 success: function (result) {
                     if (result & mail != ilk_mail) {
                         $("#Mail").css("border-color", "red")
-                        yeniEmail = false;
+                        newEmail = false;
                     }
                     else {
                         $("#Mail").css("border-color", "#00ff90")
-                        yeniEmail = true;
+                        newEmail = true;
                     }
+
+                    $("#overlay").fadeOut(300);
                 }
             })
         }
@@ -86,8 +90,8 @@ $(document).ready(function () {
         }
     })
 
-    $("#kayitform").submit(function () {
-        if (!yeniEmail | !yeniUser) {
+    $("#registerform").submit(function () {
+        if (!newEmail | !newUser) {
             return false;
         }
     })

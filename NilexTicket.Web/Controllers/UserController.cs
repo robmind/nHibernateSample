@@ -96,7 +96,7 @@ namespace NilexTicket.Controllers
         }
 
         static string islem = null;
-        public ActionResult ticketKontrol()
+        public ActionResult ticketCheck()
         {
             if (islem == "1")
                 return Json(true, JsonRequestBehavior.AllowGet);
@@ -149,12 +149,13 @@ namespace NilexTicket.Controllers
             {
                 string kl = Session["User"].ToString();
                 User kul = userRepositoty.GetAll().SingleOrDefault(x => x.Username == kl);
+                Ticket ticket = ticketRepository.GetAll().SingleOrDefault(x => x.ID == yrm.TicketID);
                 Comment Comment = new Comment();
                 Comment.CreateDate = DateTime.Now;
                 Comment.User = kul;
                 Comment.User.ID = kul.ID;
-                Comment.User_ID = kul.ID;
-                Comment.Ticket.ID = yrm.Ticket.ID;
+                Comment.Ticket = ticket;
+                Comment.Ticket.ID = ticket.ID;
                 Comment.Explanation = yrm.Explanation;
                 commentRepository.Save(Comment);
                 return Json(true);
@@ -192,12 +193,12 @@ namespace NilexTicket.Controllers
                 userRepositoty.Save(usr);
 
                 Jmodel.IsSuccess = true;
-                Jmodel.Message = "Güncelleme işlemi başarılı";
+                Jmodel.Message = "Update successful";
             }
             catch (Exception ex)
             {
                 Jmodel.IsSuccess = false;
-                Jmodel.Message = "Hata : " + ex.Message;
+                Jmodel.Message = "Error : " + ex.Message;
             }
             return Json(Jmodel, JsonRequestBehavior.AllowGet);
         }

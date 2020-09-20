@@ -4,9 +4,9 @@
 }
 @model NilexTicket.ModelView.UserViewModel
 
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Content/js/jquery.validate.min.js"></script>
+<script src="~/Content/js/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Content/js/jquery.unobtrusive-ajax.min.js"></script>
 
 <div id="page-inner">
     <div class="row">
@@ -21,7 +21,7 @@
                     <div id="mesage" class="alert alert-info" style="margin-top:10px" hidden>
                         Update successful
                     </div>
-                    @using (Ajax.BeginForm("UserEdit", "Admin", new AjaxOptions { OnSuccess = "success", OnFailure = "fail" }, new { id = "kayitform" }))
+                    @using (Ajax.BeginForm("UserEdit", "Admin", new AjaxOptions { OnSuccess = "success", OnFailure = "fail" }, new { id = "registerform" }))
                     {
                         @Html.LabelFor(x => x.FullName);
                         @Html.TextBoxFor(x => x.FullName, new { @class = "form-control" })
@@ -37,7 +37,8 @@
                         @Html.ValidationMessageFor(x => x.Mail, "", new { @class = "text-danger" })    <br />
                         <br />
                         <input type="text" name="ID" id="ID" value="@Model.ID" hidden/>
-                        <input type="submit" id="btnGuncelle" class="btn btn-lg btn-primary" value="Update" />
+                        <a href="~/Admin/UserManage" class="btn btn-lg btn-primary" style="margin-bottom:2px">Back to List</a>
+                        <input type="submit" id="btnUpdate" class="btn btn-lg btn-primary" value="Update" />
                     }
                 </div>
             </div>

@@ -6,10 +6,12 @@
     <title>Ticket System</title>
     <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/css/style.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Content/Bootstrap/js/bootstrap.min.js"></script>
-    <link href="~/Content/Bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <link href="~/Content/css/npatch.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-1.10.2.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery.validate.min.js"></script>
+    <script src="~/Content/js/jquery-ui.min.js"></script>
     <script>
         $(document).ready(function () {
             $("#logout").click(function () {
@@ -19,6 +21,22 @@
             })
         })
     </script>
+
+    <link rel="apple-touch-icon" sizes="60x60" href="/Content/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/Content/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/Content/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/Content/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/Content/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/Content/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/Content/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/Content/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/Content/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Content/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/Content/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Content/icons/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/Content/icons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
 </head>
 <body>
@@ -68,11 +86,13 @@
             @RenderBody()
         </div>
     </div>
-    <footer>
-         
-    </footer>
-    <script src="~/Scripts/metisMenu.js"></script>
-    <script src="~/Scripts/jquery-ui.js"></script>
-    <script src="~/Scripts/custom.js"></script>
+<script src="~/Content/js/jquery-ui.min.js"></script>
+<script src="~/Content/js/custom.js"></script>
+
+    <div id="overlay">
+        <div class="cv-spinner">
+            <span class="spinner"></span>
+        </div>
+    </div>
 </body>
 </html>

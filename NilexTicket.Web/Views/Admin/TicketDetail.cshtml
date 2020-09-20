@@ -2,7 +2,7 @@
     ViewBag.Title = "TicketDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model IEnumerable<NilexTicket.DB.Ticket>
+@model List<NilexTicket.DB.Comment>
 
 
 <div id="page-inner">
@@ -29,7 +29,10 @@
                     <hr>
                     @if (ViewBag.tck.ImageUrl != null)
                     {
-                        <a style="color: cadetblue;" class="btn btn-default btn-xs" href='@ViewBag.tck.ImageUrl' target='_blank'>-Ek-</a>
+                        <strong>Attachment : </strong>
+                        <br />
+                        <br />
+                        <img alt="#" src="@ViewBag.tck.ImageUrl" style="width: 300px; height: 250px; "/>
                         <hr />
                     }
                 </div>
@@ -51,7 +54,7 @@
                                                 <span> Comment Writer : @yrm.User.FullName </span>
                                             </div>
 
-                                            @yrm.Content
+                                            @yrm.Explanation
                                             <br><br>
                                         </td>
                                     </tr>
@@ -82,6 +85,7 @@
     function CommentAdd() {
         if ($("#Explanation").val() != "") {
             var dt = $("form").serializeArray();
+            $("#overlay").fadeIn(300);
             $.ajax({
                 url: '/Admin/AddComment/',
                 data: dt,
@@ -104,9 +108,11 @@
                         $("#Explanation").val("");
                         sayac++;
                     }
+                    $("#overlay").fadeOut(300);
                 },
                 error: function () {
-                    alert("An error occurred while adding a comment");
+                    showErrorMessage("An error occurred while adding a comment");
+                    $("#overlay").fadeOut(300);
                 }
             });
 
