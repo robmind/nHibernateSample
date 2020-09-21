@@ -12,6 +12,8 @@ namespace NilexTicket.DB.Repositories
             return Activator.CreateInstance<T>();
         }
 
+        //ARCHIVE 
+
         //public virtual void Delete(int id)
         //{
         //    using (ISession session = NHibernateHelper.GetCurrentSession())

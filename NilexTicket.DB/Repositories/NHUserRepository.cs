@@ -56,9 +56,6 @@ namespace NilexTicket.DB.Repositories
         {
             var session = NHibernateHelper.GetCurrentSession();
 
-            //session.Delete("delete from Tickets where UserID = ?", id, NHibernateUtil.Int32);
-            //session.Delete("delete from Comments where UserID = ?", id, NHibernateUtil.Int32);
-
             session.CreateSQLQuery("update Users set IsDeleted = 1, DeleteDate = GETDATE() where ID = " + id).ExecuteUpdate();
             session.CreateSQLQuery("update Tickets set IsDeleted = 1, DeleteDate = GETDATE() where UserID = " + id).ExecuteUpdate();
             session.CreateSQLQuery("update Comments set IsDeleted = 1, DeleteDate = GETDATE() where UserID = " + id).ExecuteUpdate();
@@ -69,9 +66,6 @@ namespace NilexTicket.DB.Repositories
         public void DeleteUserData(int id)
         {
             var session = NHibernateHelper.GetCurrentSession();
-
-            //session.Delete("delete from Tickets where UserID = ?", id, NHibernateUtil.Int32);
-            //session.Delete("delete from Comments where UserID = ?", id, NHibernateUtil.Int32);
 
             session.CreateSQLQuery("update Tickets set IsDeleted = 1, DeleteDate = GETDATE() where UserID = " + id).ExecuteUpdate();
             session.CreateSQLQuery("update Comments set IsDeleted = 1, DeleteDate = GETDATE() where UserID = " + id).ExecuteUpdate();
