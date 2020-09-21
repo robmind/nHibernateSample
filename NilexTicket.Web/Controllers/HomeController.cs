@@ -43,7 +43,7 @@ namespace NilexTicket.Controllers
                 return Json(false);
             }
 
-            User kisi = userRepositoty.LoadAllUser().SingleOrDefault(x => x.Username == veri.Username);
+            User kisi = userRepositoty.GetUserByLogin(veri.Username);
              
             if (kisi == null)
             {
@@ -115,7 +115,7 @@ namespace NilexTicket.Controllers
                     return Json(false);
                 }
 
-                User checkExistUser = userRepositoty.GetAll().Where(u => u.Username == data.Username || u.Mail ==data.Mail).FirstOrDefault();
+                User checkExistUser = userRepositoty.GetUserByLogin(data.Username);
 
                 if (checkExistUser != null)
                 {

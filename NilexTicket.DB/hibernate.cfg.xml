@@ -4,8 +4,8 @@
 		<property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
 		<property name="dialect">NHibernate.Dialect.MsSql2012Dialect</property>
 
-		<!--<property name="connection.connection_string">Server=DESKTOP-0JVCGJS;Database=NilexTicketProject;Trusted_Connection=True</property>-->
-		<property name="connection.connection_string">Data Source=188.121.44.212,1433;Initial Catalog=ph10265610782_myhakan;Integrated Security=False;User ID=myhakan;Password=R3*MyHkn;Connect Timeout=15;Encrypt=False;Packet Size=4096</property>
+		<property name="connection.connection_string">Server=DESKTOP-0JVCGJS;Database=NilexTicketProject;Trusted_Connection=True</property>
+		<!--<property name="connection.connection_string">Data Source=188.121.44.212,1433;Initial Catalog=ph10265610782_myhakan;Integrated Security=False;User ID=myhakan;Password=R3*MyHkn;Connect Timeout=15;Encrypt=False;Packet Size=4096</property>-->
 
 		<property name="show_sql">true</property>
 		<mapping assembly="NilexTicket.DB" />

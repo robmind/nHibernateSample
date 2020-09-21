@@ -4,7 +4,11 @@ namespace NilexTicket.DB.Repositories.Interfaces
 {
     public interface IUserRepositoty : IEntityRepository<User>
     {
-        User LoadByLogin(string login);
-        IEnumerable<User> LoadAllUser();
+        User GetUserByLogin(string login);
+        IEnumerable<User> GetAllUser();
+        IEnumerable<User> GetAllUserByRoleId(string role);
+        User GetUserByUserId(int id);
+        void DeleteUser(int id);
+        void DeleteUserData(int id);
     }
 }

@@ -90,6 +90,17 @@ namespace NilexTicket.DB
             get;
             set;
         }
+        public virtual bool IsDeleted
+        {
+            get;
+            set;
+        }
+
+        public virtual DateTime? DeleteDate
+        {
+            get;
+            set;
+        }
     }
 
 }

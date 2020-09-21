@@ -128,6 +128,7 @@
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\npatch.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\Ticket\7006c15421204dacb9ae09f8e696cfad.jpg" />
     <Content Include="Content\img\Ticket\b054458c622449e9a3f11a9402f453da.jpg" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\css\style.css" />

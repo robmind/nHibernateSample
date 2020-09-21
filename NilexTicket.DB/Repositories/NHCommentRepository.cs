@@ -9,11 +9,12 @@ namespace NilexComment.DB.Repositories
 {
     public class NHCommentRepository : NHBaseRepository<Comment>, ICommentRepository
     {
-        public IEnumerable<Comment> FindByTitle(string title)
+        public IEnumerable<Comment> GetAllCommentByTitle(string title)
         {
             var session = NHibernateHelper.GetCurrentSession();
             var notes = session.QueryOver<Comment>()
                 .Where(Restrictions.On<Comment>(note => note.Explanation).IsLike($"%{title}%"))
+                .Where(n => n.IsDeleted == false)
                 .List();
 
             NHibernateHelper.CloseSession();
@@ -21,11 +22,24 @@ namespace NilexComment.DB.Repositories
             return notes;
         }
 
-        public IEnumerable<Comment> LoadAllPublished()
+        public IEnumerable<Comment> GetAllPublishedComment()
         {
             var session = NHibernateHelper.GetCurrentSession();
 
             var notes = session.QueryOver<Comment>()
+                .Where(n => n.IsDeleted == false).List();
+
+            NHibernateHelper.CloseSession(); ;
+
+            return notes;
+        }
+
+        public IEnumerable<Comment> GetAllCommentByUserId(int userId)
+        {
+            var session = NHibernateHelper.GetCurrentSession();
+
+            var notes = session.QueryOver<Comment>()
+                .Where(note => note.User.ID == userId && note.IsDeleted == false)
                 .List();
 
             NHibernateHelper.CloseSession(); ;
@@ -33,12 +47,12 @@ namespace NilexComment.DB.Repositories
             return notes;
         }
 
-        public IEnumerable<Comment> LoadByUser(int userId)
+        public IEnumerable<Comment> GetAllAvailableCommentByUserId(int userId)
         {
             var session = NHibernateHelper.GetCurrentSession();
 
             var notes = session.QueryOver<Comment>()
-                .Where(note => note.User.ID == userId)
+                .Where(note => note.User.ID == userId && note.IsDeleted == false)
                 .List();
 
             NHibernateHelper.CloseSession(); ;
@@ -46,56 +60,17 @@ namespace NilexComment.DB.Repositories
             return notes;
         }
 
-        public IEnumerable<Comment> LoadAllAvailable(int userId)
+        public IEnumerable<Comment> GetAllCommentByTicketId(int ticket)
         {
             var session = NHibernateHelper.GetCurrentSession();
 
             var notes = session.QueryOver<Comment>()
-                .Where(note => note.User.ID == userId)
+                .Where(note => note.Ticket.ID == ticket && note.IsDeleted == false)
                 .List();
 
             NHibernateHelper.CloseSession(); ;
 
             return notes;
         }
-
-        public IEnumerable<Comment> LoadByTicket(int ticket)
-        {
-            var session = NHibernateHelper.GetCurrentSession();
-
-            var notes = session.QueryOver<Comment>()
-                .Where(note => note.Ticket.ID == ticket)
-                .List();
-
-            NHibernateHelper.CloseSession(); ;
-
-            return notes;
-        }
-
-
-        //public override void Save(Note entity)
-        //{
-        //var session = NHibernateHelper.GetCurrentSession();
-
-        //try
-        //{
-        //    var q = session.CreateSQLQuery(
-        //        $"EXEC SaveNote @Title=:title,@Published=:published,@Text=:text,@Tags=:tags," +
-        //        $"@CreationDate=:date,@UserId=:userId,@BinaryFile=:fileData,@FileType=:fileType")
-        //    .SetString("title", entity.Title)
-        //    .SetBoolean("published", entity.Published)
-        //    .SetString("text", entity.Text)
-        //    .SetString("tags", entity.Tags)
-        //    .SetDateTime("date", entity.CreationDate)
-        //    .SetInt64("userId", entity.User.Id)
-        //    .SetParameter("fileData", entity.BinaryFile)
-        //    .SetString("fileType", entity.FileType)
-        //    .UniqueResult();
-        //}
-        //finally
-        //{
-        //    NHibernateHelper.CloseSession();
-        //}
-        //}
     }
 }

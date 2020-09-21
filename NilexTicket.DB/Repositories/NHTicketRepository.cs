@@ -7,11 +7,12 @@ namespace NilexTicket.DB.Repositories
 {
     public class NHTicketRepository : NHBaseRepository<Ticket>, ITicketRepository
     {
-        public IEnumerable<Ticket> FindByTitle(string title)
+        public IEnumerable<Ticket> GetAllTicketByTitle(string title)
         {
             var session = NHibernateHelper.GetCurrentSession();
             var notes = session.QueryOver<Ticket>()
                 .Where(Restrictions.On<Ticket>(note => note.Title).IsLike($"%{title}%"))
+                .Where(n => n.IsDeleted == false)
                 .List();
 
             NHibernateHelper.CloseSession();
@@ -19,11 +20,28 @@ namespace NilexTicket.DB.Repositories
             return notes;
         }
           
-        public IEnumerable<Ticket> LoadAllPublished()
+        public IEnumerable<Ticket> GetAllTicket()
+        {
+            var session = NHibernateHelper.GetCurrentSession();
+
+            var notes = session.QueryOver<Ticket>().Where(n => n.IsDeleted == false).List().ToList();
+
+            NHibernateHelper.CloseSession(); ;
+
+            return notes;
+        }
+
+        public IEnumerable<Ticket> GetAllTicketByIsItRead()
+        {
+            return GetAllTicket().OrderByDescending(z => z.Status).ThenBy(x => x.IsItRead);
+        }
+
+        public IEnumerable<Ticket> GetAllTicketByUserId(int userId)
         {
             var session = NHibernateHelper.GetCurrentSession();
 
             var notes = session.QueryOver<Ticket>()
+                .Where(note => note.User.ID == userId && note.IsDeleted == false)
                 .List();
 
             NHibernateHelper.CloseSession(); ;
@@ -31,56 +49,26 @@ namespace NilexTicket.DB.Repositories
             return notes;
         }
 
-        public IEnumerable<Ticket> LoadByUser(int userId)
+        public Ticket GetTicketByFilename(string filename)
         {
             var session = NHibernateHelper.GetCurrentSession();
 
-            var notes = session.QueryOver<Ticket>()
-                .Where(note => note.User.ID == userId)
-                .List();
+            var user = session.QueryOver<Ticket>().Where(x => x.ImageUrl == filename).SingleOrDefault();
 
-            NHibernateHelper.CloseSession(); ;
+            NHibernateHelper.CloseSession();
 
-            return notes;
+            return user;
         }
-        
-        public IEnumerable<Ticket> LoadAllAvailable(int userId)
+
+        public Ticket GetTicketByTicketId(int ticketid)
         {
             var session = NHibernateHelper.GetCurrentSession();
 
-            var notes = session.QueryOver<Ticket>()
-                .Where(note => note.User.ID == userId)
-                .List();
+            var user = session.QueryOver<Ticket>().Where(x => x.ID == ticketid && x.IsDeleted == false).SingleOrDefault();
 
-            NHibernateHelper.CloseSession(); ;
+            NHibernateHelper.CloseSession();
 
-            return notes;
+            return user;
         }
-
-
-        //public override void Save(Note entity)
-        //{
-            //var session = NHibernateHelper.GetCurrentSession();
-            
-            //try
-            //{
-            //    var q = session.CreateSQLQuery(
-            //        $"EXEC SaveNote @Title=:title,@Published=:published,@Text=:text,@Tags=:tags," +
-            //        $"@CreationDate=:date,@UserId=:userId,@BinaryFile=:fileData,@FileType=:fileType")
-            //    .SetString("title", entity.Title)
-            //    .SetBoolean("published", entity.Published)
-            //    .SetString("text", entity.Text)
-            //    .SetString("tags", entity.Tags)
-            //    .SetDateTime("date", entity.CreationDate)
-            //    .SetInt64("userId", entity.User.Id)
-            //    .SetParameter("fileData", entity.BinaryFile)
-            //    .SetString("fileType", entity.FileType)
-            //    .UniqueResult();
-            //}
-            //finally
-            //{
-            //    NHibernateHelper.CloseSession();
-            //}
-        //}
     }
 }

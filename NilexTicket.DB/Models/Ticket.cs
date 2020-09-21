@@ -114,6 +114,17 @@ namespace NilexTicket.DB
         }
 
         public int User_ID { get; set; }
+        public virtual bool IsDeleted
+        {
+            get;
+            set;
+        }
+
+        public virtual DateTime? DeleteDate
+        {
+            get;
+            set;
+        }
     }
 
 }

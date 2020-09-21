@@ -6,6 +6,8 @@
 		</id>
 		<property name="Explanation" type="String" column="`Explanation`"  lazy ="false"/>
 		<property name="CreateDate" type="DateTime" column="`CreateDate`"  lazy ="false"/>
+		<property name="IsDeleted" type="Boolean" column="`IsDeleted`"  lazy ="false"/>
+		<property name="DeleteDate" type="DateTime" column="`DeleteDate`" lazy ="false" />
 		<many-to-one name="Ticket" class="Ticket" column="`TicketID`" not-null="true" fetch="select"  lazy ="false"/>
 		<many-to-one name="User" class="User" column="`UserID`" not-null="true" fetch="select"  lazy ="false"/>
 	</class>

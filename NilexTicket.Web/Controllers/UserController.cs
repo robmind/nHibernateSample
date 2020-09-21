@@ -27,10 +27,10 @@ namespace NilexTicket.Controllers
         public ActionResult Index()
         {
             string kl = Session["User"] as string;
-            var kul = userRepositoty.GetAll().SingleOrDefault(x => x.Username == kl);
+            var kul = userRepositoty.GetUserByLogin(kl);
             ViewBag.username = kul.FullName;
 
-            var tick = ticketRepository.GetAll().Where(y => y.User.ID == kul.ID).Select(x => new { x.CreateDate, x.Status, x.IsItRead}).ToList();
+            var tick = ticketRepository.GetAllTicketByUserId(kul.ID);
             int newticket = 0, open = 0, unanswered = 0;
             foreach (var item in tick)
             {
@@ -42,15 +42,15 @@ namespace NilexTicket.Controllers
             ViewBag.newticket = newticket;
             ViewBag.open = open;
             ViewBag.unanswered = unanswered;
-            ViewBag.toplam = tick.Count;
+            ViewBag.toplam = tick.Count();
 
             return View();
         }
         public ActionResult MyTickets()
         {
             string kul = Session["User"] as string;
-            var mod = userRepositoty.GetAll().SingleOrDefault(x => x.Username == kul);
-            var ticks = ticketRepository.GetAll().Where(x => x.User.ID == mod.ID).OrderByDescending(k=>k.CreateDate);
+            var mod = userRepositoty.GetUserByLogin(kul);
+            var ticks = ticketRepository.GetAllTicketByUserId(mod.ID);
             return View(ticks);
         }
         public ActionResult NewTicket()
@@ -63,7 +63,7 @@ namespace NilexTicket.Controllers
         {
             HttpPostedFileBase file = Request.Files[0];
             string kadi = Session["User"] as string;
-            User user = userRepositoty.GetAll().SingleOrDefault(x => x.Username == kadi);
+            User user = userRepositoty.GetUserByLogin(kadi);
             if (file.ContentLength > 0)
             {
                 string DosyaAdi = Guid.NewGuid().ToString().Replace("-", "");
@@ -116,7 +116,7 @@ namespace NilexTicket.Controllers
 
         public JsonResult TicketStatusu(int id)
         {
-            Ticket tk = ticketRepository.GetAll().SingleOrDefault(x => x.ID == id);
+            Ticket tk = ticketRepository.GetTicketByTicketId(id);
             if ((bool)tk.Status)
             {
                 tk.Status = false;
@@ -134,9 +134,9 @@ namespace NilexTicket.Controllers
         public ActionResult TicketDetail(int id)
         {
             string kl = Session["User"] as string;
-            ViewBag.kl = userRepositoty.GetAll().SingleOrDefault(x => x.Username == kl).FullName;
-            ViewBag.tck = ticketRepository.GetAll().SingleOrDefault(x => x.ID == id);
-            List<Comment> Comments = commentRepository.GetAll().Where(x => x.Ticket.ID == id).ToList();
+            ViewBag.kl = userRepositoty.GetUserByLogin(kl).FullName;
+            ViewBag.tck = ticketRepository.GetTicketByTicketId(id);
+            List<Comment> Comments = (List<Comment>) commentRepository.GetAllCommentByTicketId(id);
 
             if (ViewBag.tck == null)
             {
@@ -149,8 +149,8 @@ namespace NilexTicket.Controllers
             try
             {
                 string kl = Session["User"].ToString();
-                User kul = userRepositoty.GetAll().SingleOrDefault(x => x.Username == kl);
-                Ticket ticket = ticketRepository.GetAll().SingleOrDefault(x => x.ID == yrm.TicketID);
+                User kul = userRepositoty.GetUserByLogin(kl);
+                Ticket ticket = ticketRepository.GetTicketByTicketId(yrm.TicketID);
                 Comment Comment = new Comment();
                 Comment.CreateDate = DateTime.Now;
                 Comment.User = kul;
@@ -169,7 +169,7 @@ namespace NilexTicket.Controllers
         public ActionResult Settings()
         {
             string klSession = (string)Session["User"];
-            User data = userRepositoty.GetAll().SingleOrDefault(x => x.Username == klSession);
+            User data = userRepositoty.GetUserByLogin(klSession);
             if (data != null)
             {
                 UserViewModel mdel = data;
@@ -212,7 +212,7 @@ namespace NilexTicket.Controllers
                         return Json(false);
                     }
 
-                    User checkExistUser = userRepositoty.GetAll().Where(u => u.Username == usrGelen.Username).FirstOrDefault();
+                    User checkExistUser = userRepositoty.GetUserByLogin(usrGelen.Username);
 
                     if (checkExistUser == null)
                     {
@@ -221,7 +221,7 @@ namespace NilexTicket.Controllers
                     else
                     {
                         string sr = Session["User"] as string;
-						User usrUpdated = userRepositoty.GetAll().SingleOrDefault(x => x.Username == sr);
+                        User usrUpdated = userRepositoty.GetUserByLogin(sr);
                         usrUpdated.FullName = usrGelen.FullName;
                         usrUpdated.Username = usrGelen.Username;
                         usrUpdated.Mail = usrGelen.Mail;

@@ -11,6 +11,8 @@
 		<property name="Priority" type="String" column="`Priority`" length="50"  lazy ="false"/>
 		<property name="Status" type="Boolean" column="`Status`"  lazy ="false"/>
 		<property name="Title" type="String" column="`Title`" length="150"  lazy ="false"/>
+		<property name="IsDeleted" type="Boolean" column="`IsDeleted`"  lazy ="false"/>
+		<property name="DeleteDate" type="DateTime" column="`DeleteDate`" lazy ="false" />
 		<set name="Comment" inverse="true" lazy ="false">
 			<key column="`TicketID`" />
 			<one-to-many class="Comment" />

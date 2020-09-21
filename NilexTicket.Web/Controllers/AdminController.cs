@@ -24,11 +24,10 @@ namespace NilexTicket.Controllers
             commentRepository = new NHCommentRepository();
         }
 
-        //
         // GET: /Admin/
         public ActionResult Index()
         {
-            var tick = ticketRepository.LoadAllPublished().Select(x => new { x.CreateDate, x.Status, x.IsItRead }).ToList();
+            var tick = ticketRepository.GetAllTicket();
             int newticket = 0, open = 0, unanswered = 0;
             foreach (var item in tick)
             {
@@ -41,20 +40,18 @@ namespace NilexTicket.Controllers
             ViewBag.newticket = newticket;
             ViewBag.open = open;
             ViewBag.unanswered = unanswered;
-            ViewBag.toplam = tick.Count;
+            ViewBag.toplam = tick.Count();
 
             string kl = Session["Admin"] as string;
-            ViewBag.kl = userRepositoty.LoadByLogin(kl);
+            ViewBag.kl = userRepositoty.GetUserByLogin(kl);
 
             return View();
         }
         public ActionResult Manage()
         {
             ViewBag.admin = Session["Admin"];
-            var Userlar = userRepositoty.GetAll().Where(x => x.Role == "User").ToList().OrderBy(x => x.Username)
-                .ToList();
-            ViewBag.Adminler = userRepositoty.GetAll().Where(x => x.Role == "Admin").ToList().OrderBy(x => x.ID)
-                .ToList();
+            var Userlar = userRepositoty.GetAllUserByRoleId("User");
+            ViewBag.Adminler = userRepositoty.GetAllUserByRoleId("Admin");
             return View(Userlar);
         }
 
@@ -64,7 +61,7 @@ namespace NilexTicket.Controllers
             JsonModel Jmodel = new JsonModel();
             try
             {
-                var usr = userRepositoty.GetAll().SingleOrDefault(x => x.ID == id);
+                var usr = userRepositoty.GetUserByUserId(id);
                 usr.Role = "User";
                 userRepositoty.Save(usr);
 
@@ -84,27 +81,10 @@ namespace NilexTicket.Controllers
             JsonModel jmodel = new JsonModel();
             try
             {
-                User usr = userRepositoty.GetAll().SingleOrDefault(x => x.ID == id);
+                User usr = userRepositoty.GetUserByUserId(id);
                 if (usr != null)
                 {
-                    var tck = ticketRepository.GetAll().Where(x => x.UserID == id).ToList();
-                    if (tck.Count > 0)
-                    {
-                        foreach (var item in tck)
-                        {
-                            ticketRepository.Delete(item.ID);
-                            var yrm = commentRepository.GetAll().Where(x => x.Ticket.ID == item.ID).ToList();
-                            foreach (var item2 in yrm)
-                            {
-                                commentRepository.Delete(item2.ID);
-                            }
-                            var File = ticketRepository.GetAll().SingleOrDefault(x => x.ImageUrl == item.ImageUrl);
-                            if (File != null)
-                            {
-                                System.IO.File.Delete(Server.MapPath(File.ImageUrl));
-                            }
-                        }
-                    }
+                    userRepositoty.DeleteUserData(usr.ID);
                     usr.Role = "Admin";
                     userRepositoty.Save(usr);
                     jmodel.IsSuccess = true;
@@ -120,12 +100,12 @@ namespace NilexTicket.Controllers
 
         public ActionResult Tickets()
         {
-            var tck = ticketRepository.GetAll().ToList().OrderByDescending(z => z.Status).ThenBy(x => x.IsItRead);
+            var tck = ticketRepository.GetAllTicketByIsItRead();
             return View(tck);
         }
         public JsonResult TicketStatusu(int id)
         {
-            Ticket tk = ticketRepository.GetAll().SingleOrDefault(x => x.ID == id);
+            Ticket tk = ticketRepository.GetTicketByTicketId(id);
             if ((bool)tk.Status)
             {
                 tk.Status = false;
@@ -142,9 +122,9 @@ namespace NilexTicket.Controllers
         public ActionResult TicketDetail(int id)
         {
             string kl = Session["Admin"] as string;
-            ViewBag.kl = userRepositoty.GetAll().SingleOrDefault(x => x.Username == kl).FullName;
-            ViewBag.tck = ticketRepository.GetAll().SingleOrDefault(x => x.ID == id);
-            var Comments = commentRepository.GetAll().Where(x => x.Ticket.ID == id).ToList();
+            ViewBag.kl = userRepositoty.GetUserByLogin(kl).FullName;
+            ViewBag.tck = ticketRepository.GetTicketByTicketId(id);
+            var Comments = commentRepository.GetAllCommentByTicketId(id);
 
             if (ViewBag.tck == null)
             {
@@ -157,11 +137,11 @@ namespace NilexTicket.Controllers
         {
             try
             {
-                Ticket cevap = ticketRepository.GetAll().SingleOrDefault(x => x.ID == yrm.TicketID);
+                Ticket cevap = ticketRepository.GetTicketByTicketId(yrm.TicketID);
                 cevap.IsItRead = true;
 
                 string kl = Session["Admin"] as string;
-                User us = userRepositoty.GetAll().SingleOrDefault(x => x.Username == kl);
+                User us = userRepositoty.GetUserByLogin(kl);
                 Comment nYrm = new Comment();
                 nYrm.Ticket = cevap;
                 nYrm.Ticket.ID = cevap.ID;
@@ -180,7 +160,7 @@ namespace NilexTicket.Controllers
         }
         public ActionResult UserManage()
         {
-            return View(userRepositoty.GetAll().Where(x => x.Role == "User").ToList().OrderBy(y => y.ID));
+            return View(userRepositoty.GetAllUserByRoleId("User"));
         }
 
         public ActionResult UserCreate()
@@ -221,7 +201,7 @@ namespace NilexTicket.Controllers
                         return Json(false);
                     }
 
-                    User checkExistUser = userRepositoty.GetAll().Where(u => u.Username == usrGelen.Username || u.Mail == usrGelen.Mail).FirstOrDefault();
+                    User checkExistUser = userRepositoty.GetUserByLogin(usrGelen.Username);
 
                     if (checkExistUser != null)
                     {
@@ -257,7 +237,7 @@ namespace NilexTicket.Controllers
 
         public ActionResult UserEdit(int id)
         {
-            var usr = userRepositoty.GetAll().SingleOrDefault(x => x.ID == id);
+            var usr = userRepositoty.GetUserByUserId(id);
             UserViewModel uvm = usr;
             return View(uvm);
         }
@@ -268,7 +248,7 @@ namespace NilexTicket.Controllers
             JsonModel jmodel = new JsonModel();
             try
             {
-                User usrUpdated = userRepositoty.GetAll().SingleOrDefault(x => x.ID == usrGelen.ID);
+                User usrUpdated = userRepositoty.GetUserByUserId(usrGelen.ID);
                 usrUpdated.FullName = usrGelen.FullName;
                 usrUpdated.Username = usrGelen.Username;
                 usrUpdated.Password = DESEncrypt.Encrypt(usrGelen.Password);
@@ -291,28 +271,10 @@ namespace NilexTicket.Controllers
             JsonModel jmodel = new JsonModel();
             try
             {
-                User usr = userRepositoty.GetAll().SingleOrDefault(x => x.ID == id);
+                User usr = userRepositoty.GetUserByUserId(id);
                 if (usr != null)
                 {
-                    var tck = ticketRepository.GetAll().Where(x => x.UserID == id).ToList();
-                    if (tck.Count > 0)
-                    {
-                        foreach (var item in tck)
-                        {
-                            ticketRepository.Delete(item.ID);
-                            var yrm = commentRepository.GetAll().Where(x => x.Ticket.ID == item.ID).ToList();
-                            foreach (var item2 in yrm)
-                            {
-                                commentRepository.Delete(item2.ID);
-                            }
-                            var File = ticketRepository.GetAll().SingleOrDefault(x => x.ImageUrl == item.ImageUrl);
-                            if (File != null)
-                            {
-                                System.IO.File.Delete(Server.MapPath(File.ImageUrl));
-                            }
-                        }
-                    }
-                    userRepositoty.Save(usr);
+                    userRepositoty.DeleteUser(usr.ID);
                     jmodel.IsSuccess = true;
                 }
             }

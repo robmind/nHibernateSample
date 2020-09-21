@@ -12,40 +12,40 @@ namespace NilexTicket.DB.Repositories
             return Activator.CreateInstance<T>();
         }
 
-        public virtual void Delete(int id)
-        {
-            using (ISession session = NHibernateHelper.GetCurrentSession())
-            {
-                using (var transaction = session.BeginTransaction())
-                {
-                    var obj = session.Get<T>(id);
-                    session.Delete(obj);
-                    transaction.Commit();
-                }
-            }
-        }
+        //public virtual void Delete(int id)
+        //{
+        //    using (ISession session = NHibernateHelper.GetCurrentSession())
+        //    {
+        //        using (var transaction = session.BeginTransaction())
+        //        {
+        //            var obj = session.Get<T>(id);
+        //            session.Delete(obj);
+        //            transaction.Commit();
+        //        }
+        //    }
+        //}
 
-        public virtual IEnumerable<T> GetAll()
-        {
-            ISession session = NHibernateHelper.GetCurrentSession();
+        //public virtual IEnumerable<T> GetAll()
+        //{
+        //    ISession session = NHibernateHelper.GetCurrentSession();
 
-            var entities = session.CreateCriteria<T>().List<T>();
+        //    var entities = session.CreateCriteria<T>().List<T>();
 
-            NHibernateHelper.CloseSession();
+        //    NHibernateHelper.CloseSession();
 
-            return entities;
-        }
+        //    return entities;
+        //}
 
-        public virtual T Load(int id)
-        {
-            ISession session = NHibernateHelper.GetCurrentSession();
+        //public virtual T Load(int id)
+        //{
+        //    ISession session = NHibernateHelper.GetCurrentSession();
 
-            var user = session.Load<T>(id);
+        //    var user = session.Load<T>(id);
 
-            NHibernateHelper.CloseSession();
+        //    NHibernateHelper.CloseSession();
 
-            return user;
-        }
+        //    return user;
+        //}
 
         public virtual void Save(T entity)
         {

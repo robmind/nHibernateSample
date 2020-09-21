@@ -4,9 +4,11 @@ namespace NilexTicket.DB.Repositories.Interfaces
 {
     public interface ITicketRepository : IEntityRepository<Ticket>
     {
-        IEnumerable<Ticket> FindByTitle(string title);
-        IEnumerable<Ticket> LoadAllPublished();
-        IEnumerable<Ticket> LoadByUser(int userId);
-        IEnumerable<Ticket> LoadAllAvailable(int userId);
+        IEnumerable<Ticket> GetAllTicketByTitle(string title);
+        IEnumerable<Ticket> GetAllTicket();
+        Ticket GetTicketByTicketId(int ticketid);
+        IEnumerable<Ticket> GetAllTicketByIsItRead();
+        IEnumerable<Ticket> GetAllTicketByUserId(int userId);
+        Ticket GetTicketByFilename(string filename);
     }
 }
