@@ -8,9 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="~/Content/css/style.css" rel="stylesheet" />
     <link href="~/Content/css/npatch.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.3.913/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.3.913/styles/kendo.metroblack.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2017.3.913/styles/kendo.metroblack.mobile.min.css" />
     <script src="~/Content/js/jquery-1.10.2.min.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
     <script src="~/Content/js/jquery.validate.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2017.3.913/js/kendo.all.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
@@ -40,59 +44,59 @@
     <meta name="msapplication-TileImage" content="/Content/icons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 </head>
-    <body>
-        <div id="wrapper">
-            <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0 ; background-color:#333">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/Admin/Index">
-                        Ticket System
-                    </a>
-                </div>
-                <span style="color:#efeaea;text-indent:10px;line-height:1.8">
-                    <br>
-                    &nbsp;&nbsp;
-                </span>
-            </nav>
-            <nav class="navbar-default navbar-side" role="navigation">
-                <div class="sidebar-collapse">
-                    <ul class="nav" id="main-menu">
-                        <li>
-                            <a href="~/Admin/Tickets/">
-                                <i class="fa fa-th-large"></i>All Tickets
-                            </a>
-                        </li>
-                        <li>
-                            <a href="~/Admin/UserManage/">
-                                <i class="fa fa-th-large"></i>User Management
-                            </a>
-                        </li>
-                        <li>
-                            <a href="~/Admin/Manage/">
-                                <i class="fa fa-th-large"></i>Admin Management
-                            </a>
-                        </li>
-                        <li>
-                            <div class="user-div">
-                                <a href="/Home/Login/" style="color:#28AB80; text-decoration:none; font-weight:900; font-size:18px;" id="logout">
-                                    <i class="fa fa-sign-out div-exchange" id="buttonMenu"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <div id="page-wrapper" class="page-wrapper-cls">
-                @RenderBody()
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0 ; background-color:#333">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/Admin/Index">
+                    Ticket System
+                </a>
             </div>
+            <span style="color:#efeaea;text-indent:10px;line-height:1.8">
+                <br>
+                &nbsp;&nbsp;
+            </span>
+        </nav>
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li>
+                        <a href="~/Admin/Tickets/">
+                            <i class="fa fa-th-large"></i>All Tickets
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Admin/UserManage/">
+                            <i class="fa fa-th-large"></i>User Management
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Admin/Manage/">
+                            <i class="fa fa-th-large"></i>Admin Management
+                        </a>
+                    </li>
+                    <li>
+                        <div class="user-div">
+                            <a href="/Home/Login/" style="color:#28AB80; text-decoration:none; font-weight:900; font-size:18px;" id="logout">
+                                <i class="fa fa-sign-out div-exchange" id="buttonMenu"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="page-wrapper" class="page-wrapper-cls">
+            @RenderBody()
         </div>
-        <script src="~/Content/js/jquery-ui.min.js"></script>
-        <script src="~/Content/js/custom.js"></script>
+    </div>
+    <script src="~/Content/js/jquery-ui.min.js"></script>
+    <script src="~/Content/js/custom.js"></script>
 
-        <div id="overlay">
-            <div class="cv-spinner">
-                <span class="spinner"></span>
-            </div>
+    <div id="overlay">
+        <div class="cv-spinner">
+            <span class="spinner"></span>
         </div>
-    </body>
+    </div>
+</body>
 </html>

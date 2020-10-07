@@ -21,7 +21,7 @@
                     <hr />
                     <a style="color: cadetblue; float:left; margin-right:15px;" class="btn btn-default btn-xs"><strong>Comment</strong></a>
 
-                    <h5>@ViewBag.tck.Content </h5>
+                    <h5>@Html.Raw(ViewBag.tck.Content) </h5>
                     <hr>
                     <h5>
                         @if (ViewBag.tck.ImageUrl != null)
@@ -103,14 +103,14 @@
                     if (result) {
                         $("#CommentAdd").append(
                             "<tr id='eklenen-" + sayac + "' hidden>" +
-                                "<td>" +
-                                    "<div class='alert alert-info'>" +
-                                        "<span> Create Date : " + '@DateTime.Now.ToString("dd.MM.yyyy HH:mm")' + " </span>    -" +
-                                         "<span> Comment Writer : " + '@ViewBag.kl' + "</span>" +
-                                    "</div>" +
-                                    $("#Explanation").val() +
-                                    "<br><br>" +
-                                "</td>" +
+                            "<td>" +
+                            "<div class='alert alert-info'>" +
+                            "<span> Create Date : " + '@DateTime.Now.ToString("dd.MM.yyyy HH:mm")' + " </span>    -" +
+                            "<span> Comment Writer : " + '@ViewBag.kl' + "</span>" +
+                            "</div>" +
+                            $("#Explanation").val() +
+                            "<br><br>" +
+                            "</td>" +
                             "</tr>");
 
                         $("#eklenen-" + sayac).fadeIn();
@@ -127,4 +127,58 @@
 
         }
     }
+</script>
+
+<script>
+    var editor = $("#Explanation").kendoEditor({
+        encoded: false,
+        tools: [
+            "bold",
+            "italic",
+            "underline",
+            "justifyLeft",
+            "justifyCenter",
+            "justifyRight",
+            "insertUnorderedList",
+            "createLink",
+            "unlink",
+            "insertImage",
+            "tableWizard",
+            "createTable",
+            "addRowAbove",
+            "addRowBelow",
+            "addColumnLeft",
+            "addColumnRight",
+            "deleteRow",
+            "deleteColumn",
+            "mergeCellsHorizontally",
+            "mergeCellsVertically",
+            "splitCellHorizontally",
+            "splitCellVertically",
+            "formatting",
+            {
+                name: "fontName",
+                items: [
+                    { text: "Andale Mono", value: "Andale Mono" },
+                    { text: "Arial", value: "Arial" },
+                    { text: "Arial Black", value: "Arial Black" },
+                    { text: "Book Antiqua", value: "Book Antiqua" },
+                    { text: "Comic Sans MS", value: "Comic Sans MS" },
+                    { text: "Courier New", value: "Courier New" },
+                    { text: "Georgia", value: "Georgia" },
+                    { text: "Helvetica", value: "Helvetica" },
+                    { text: "Impact", value: "Impact" },
+                    { text: "Symbol", value: "Symbol" },
+                    { text: "Tahoma", value: "Tahoma" },
+                    { text: "Terminal", value: "Terminal" },
+                    { text: "Times New Roman", value: "Times New Roman" },
+                    { text: "Trebuchet MS", value: "Trebuchet MS" },
+                    { text: "Verdana", value: "Verdana" },
+                ]
+            },
+            "fontSize",
+            "foreColor",
+            "backColor",
+        ]
+    });
 </script>

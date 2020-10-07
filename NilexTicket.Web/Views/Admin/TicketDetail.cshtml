@@ -1,7 +1,5 @@
-﻿@{
-    ViewBag.Title = "TicketDetail";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@{ ViewBag.Title = "TicketDetail";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
 @model IEnumerable<NilexTicket.DB.Comment>
 
 
@@ -16,7 +14,7 @@
             <div class="row">
                 <div class="col-md-10">
                     <h3 style="float:left"> TICKET ID : @ViewBag.tck.ID &nbsp;</h3>
-                    <h3 style="float:left">- Comment Writer :</h3> 
+                    <h3 style="float:left">- Comment Writer :</h3>
                     <h3 style="float:left; color :red"><ststrong>&nbsp; @ViewBag.tck.User.FullName</ststrong></h3>
                     <h3 style="margin-left:20px" class="btn btn-primary btn-xs">@((bool)ViewBag.tck.Status ? "Open" : "Close")</h3>
                     <hr />
@@ -29,12 +27,11 @@
                     <hr>
                     @if (ViewBag.tck.ImageUrl != null)
                     {
-                        <strong>Attachment : </strong>
+        <strong>Attachment : </strong>
                         <br />
-                        <br />
-                        <img alt="#" src="@ViewBag.tck.ImageUrl" style="width: 300px; height: 250px; "/>
-                        <hr />
-                    }
+                                        <br />
+                                                        <img alt="#" src="@ViewBag.tck.ImageUrl" style="width: 300px; height: 250px; " />
+                                                                        <hr />}
                 </div>
             </div>
             <div class="row">
@@ -47,18 +44,17 @@
                                 @foreach (var yrm in Model)
                                 {
                                     DateTime dt = (DateTime)yrm.CreateDate;
-                                    <tr>
-                                        <td>
-                                            <div class="alert @((yrm.User.Role == "Admin") ? "alert-success" : "alert-info")">
-                                                <span> Create Date : @dt.ToString("dd.MM.yyyy HH:mm")</span> -
-                                                <span> Comment Writer : @yrm.User.FullName </span>
-                                            </div>
+                    <tr>
+                        <td>
+                            <div class="alert @((yrm.User.Role == "Admin") ? "alert-success" : "alert-info")">
+                                <span> Create Date : @dt.ToString("dd.MM.yyyy HH:mm")</span> -
+                                <span> Comment Writer : @yrm.User.FullName </span>
+                            </div>
 
-                                            @yrm.Explanation
-                                            <br><br>
-                                        </td>
-                                    </tr>
-                                }
+                            @yrm.Explanation
+                            <br><br>
+                        </td>
+                    </tr>}
                             </tbody>
                         </table>
                     </div>
@@ -70,7 +66,7 @@
                     <h4> <strong>REPLY : </strong> </h4>
                     <hr>
                     <form action="/" enctype="multipart/form-data" method="post" onsubmit="return false">
-                        <input name="TicketID" id="TicketID" hidden value="@ViewBag.tck.ID" /> 
+                        <input name="TicketID" id="TicketID" hidden value="@ViewBag.tck.ID" />
                         <textarea class="form-control" cols="20" id="Explanation" name="Explanation" rows="10" required></textarea>
                         <br />
                         <input type="button" class="btn btn-success" onclick="CommentAdd()" value="Reply">
@@ -94,14 +90,14 @@
                     if (result) {
                         $("#CommentAdd").append(
                             "<tr id='eklenen-" + sayac + "' hidden>" +
-                                "<td>" +
-                                    "<div class='alert alert-success'>" +
-                                        "<span> Create Date : " + '@DateTime.Now.ToString("dd.MM.yyyy HH:mm")' + " </span> -" +
-                                         "<span> Comment Writer : " + '@ViewBag.kl' + "</span>" +
-                                    "</div>" +
-                                    $("#Explanation").val() +
-                                    "<br><br>" +
-                                "</td>" +
+                            "<td>" +
+                            "<div class='alert alert-success'>" +
+                            "<span> Create Date : " + '@DateTime.Now.ToString("dd.MM.yyyy HH:mm")' + " </span> -" +
+                            "<span> Comment Writer : " + '@ViewBag.kl' + "</span>" +
+                            "</div>" +
+                            $("#Explanation").val() +
+                            "<br><br>" +
+                            "</td>" +
                             "</tr>");
 
                         $("#eklenen-" + sayac).fadeIn();
@@ -118,4 +114,58 @@
 
         }
     }
+</script>
+
+<script>
+    var editor = $("#Explanation").kendoEditor({
+        encoded: false,
+        tools: [
+            "bold",
+            "italic",
+            "underline",
+            "justifyLeft",
+            "justifyCenter",
+            "justifyRight",
+            "insertUnorderedList",
+            "createLink",
+            "unlink",
+            "insertImage",
+            "tableWizard",
+            "createTable",
+            "addRowAbove",
+            "addRowBelow",
+            "addColumnLeft",
+            "addColumnRight",
+            "deleteRow",
+            "deleteColumn",
+            "mergeCellsHorizontally",
+            "mergeCellsVertically",
+            "splitCellHorizontally",
+            "splitCellVertically",
+            "formatting",
+            {
+                name: "fontName",
+                items: [
+                    { text: "Andale Mono", value: "Andale Mono" },
+                    { text: "Arial", value: "Arial" },
+                    { text: "Arial Black", value: "Arial Black" },
+                    { text: "Book Antiqua", value: "Book Antiqua" },
+                    { text: "Comic Sans MS", value: "Comic Sans MS" },
+                    { text: "Courier New", value: "Courier New" },
+                    { text: "Georgia", value: "Georgia" },
+                    { text: "Helvetica", value: "Helvetica" },
+                    { text: "Impact", value: "Impact" },
+                    { text: "Symbol", value: "Symbol" },
+                    { text: "Tahoma", value: "Tahoma" },
+                    { text: "Terminal", value: "Terminal" },
+                    { text: "Times New Roman", value: "Times New Roman" },
+                    { text: "Trebuchet MS", value: "Trebuchet MS" },
+                    { text: "Verdana", value: "Verdana" },
+                ]
+            },
+            "fontSize",
+            "foreColor",
+            "backColor",
+        ]
+    });
 </script>

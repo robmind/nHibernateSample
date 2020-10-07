@@ -133,6 +133,7 @@ namespace NilexTicket.Controllers
             return View(Comments);
         }
         [HttpPost]
+        [ValidateInput(false)]
         public JsonResult AddComment(Comment yrm)
         {
             try

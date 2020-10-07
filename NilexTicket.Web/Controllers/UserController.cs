@@ -59,6 +59,7 @@ namespace NilexTicket.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult NewTicket(Ticket newticket)
         {
             HttpPostedFileBase file = Request.Files[0];
@@ -144,6 +145,8 @@ namespace NilexTicket.Controllers
             }
             return View(Comments);
         }
+
+        [ValidateInput(false)]
         public JsonResult AddComment(Comment yrm)
         {
             try
@@ -161,7 +164,7 @@ namespace NilexTicket.Controllers
                 commentRepository.Save(Comment);
                 return Json(true);
             }
-            catch
+            catch (Exception ex)
             {
                 return Json(false);
             }
