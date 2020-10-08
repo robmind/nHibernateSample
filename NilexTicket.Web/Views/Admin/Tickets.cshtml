@@ -51,7 +51,7 @@
                                             columns.Bound(p => p.Status).Title("Status");
                                             columns.Bound(p => p.Priority).Title("Priority");
                                             columns.Bound(p => p.Title).Title("Title");
-                                            columns.Bound(p => p.ID).ClientTemplate("<a href='" + @Url.Action("TicketDetail", "Admin", new { ID = "#=ID#" }) + "' class='btn btn-primary'><i class='fa fa-eye'></i>  Link</a>");
+                                            columns.Bound(p => p.ID).ClientTemplate("<a href='" + @Url.Action("TicketDetail", "Admin", new { ID = "#=ID#" }) + "' class='btn btn-primary'><i class='fa fa-eye'></i>  Show</a>");
                     })
                     .Sortable()
                     .Scrollable(scr=>scr.Height(230))
