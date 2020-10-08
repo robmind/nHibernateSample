@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.UI;
 using NilexComment.DB.Repositories;
 using NilexTicket.DB;
 using NilexTicket.DB.Repositories;
@@ -46,7 +47,7 @@ namespace NilexTicket.Controllers
 
             return View();
         }
-        public ActionResult MyTickets()
+        public ActionResult MyTickets([DataSourceRequest] DataSourceRequest request)
         {
             string kul = Session["User"] as string;
             var mod = userRepositoty.GetUserByLogin(kul);

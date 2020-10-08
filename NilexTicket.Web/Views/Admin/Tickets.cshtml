@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "UserTickets";
 }
+@using Kendo.Mvc.UI
 @model IEnumerable<NilexTicket.DB.Ticket>
 <script>
     function openCloseButton(a) {
@@ -42,67 +43,30 @@
                     You need to view to answer
                 </span>
                 <hr>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">
-                                    <a href="javascript:;">Ticket ID</a>
-                                </th>
-                                <th scope="col">
-                                    <a href="javascript:;">User</a>
-                                </th>
-                                <th scope="col">
-                                    <a href="javascript:;">Status</a>
-                                </th>
-                                <th scope="col">
-                                    <a href="javascript:;">Title</a>
-                                </th>
-                                <th scope="col">
-                                    <a href="javascript:;">Priority</a>
-                                </th>
-                                <th scope="col">
-                                    <a href="javascript:;">Preview /Reply</a>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                
+                @(Html.Kendo().Grid(Model)
+                    .Name("Grid")
+                    .Columns(columns => {
+                                            columns.Bound(p => p.ID).Title("Ticket ID");
+                                            columns.Bound(p => p.Status).Title("Status");
+                                            columns.Bound(p => p.Priority).Title("Priority");
+                                            columns.Bound(p => p.Title).Title("Title");
+                                            columns.Template(c => "<a href='"+ Url.Action("TicketDetail", "Admin")+"/"+ c.ID + "'>Show</a>").Title("Preview");
 
-
-                            @foreach (var ticket in Model)
-                            {
-                                <tr>
-                                    <td>@ticket.ID</td>
-                                    <td>@ticket.User.Username</td>
-                                    <td>
-                                        <a href="javascript:;" class="btn @((bool)ticket.Status ? "btn-primary" :"btn-success") btn-xs" id="btnStatus-@ticket.ID" onclick="openCloseButton(@ticket.ID)">@((bool)ticket.Status ? "Open" : "Close")</a>
-
-                                    </td>
-                                    <td>@ticket.Title</td>
-                                    <td>
-                                        @{
-                                if (ticket.Priority == "High")
-                                {
-                                    <a class="btn btn-danger btn-xs">High</a>
-                                }
-                                else if (ticket.Priority == "Middle")
-                                {
-                                    <a class="btn btn-info btn-xs">Middle</a>
-                                }
-                                else
-                                {
-                                    <a class="btn btn-warning btn-xs">Low</a>
-                                }
-                                        }
-                                    </td>
-                                    <td>
-                                        <a href="/Admin/TicketDetail/@ticket.ID" class="btn btn-xs btn-warning">Show</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                    })
+                    .Sortable()
+                    .Scrollable(scr=>scr.Height(230))
+                    .Filterable()
+                    .Pageable( pageable => pageable
+                        .Input(true)
+                        .Numeric(false)
+                    )
+                    .Filterable()
+                    //.Groupable();  
+                    .Groupable(g => g.Messages( m => m.Empty("")))
+                    .Resizable(resize => resize.Columns(true))
+                    )
+                
             </div>
         </div>
     </div>
