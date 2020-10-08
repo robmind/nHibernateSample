@@ -13,27 +13,39 @@
         </div>
     </div>
 
-    @(Html.Kendo().Grid(Model)
+    @(Html.Kendo().Grid<NilexTicket.DB.Ticket>()
         .Name("Grid")
         .Columns(columns => {
-            columns.Bound(p => p.ID).Title("Ticket ID");
-            columns.Bound(p => p.Status).Title("Status");
-            columns.Bound(p => p.Priority).Title("Priority");
-            columns.Bound(p => p.Title).Title("Title");
-            columns.Template(c => "<a href='"+ Url.Action("TicketDetail", "User")+"/"+ c.ID + "'>Show</a>").Title("Preview");
-
+                                columns.Bound(p => p.ID).Title("Ticket ID");
+                                columns.Bound(p => p.Status).Title("Status");
+                                columns.Bound(p => p.Priority).Title("Priority");
+                                columns.Bound(p => p.Title).Title("Title");
+                                columns.Template(c => "<a href='"+ Url.Action("TicketDetail", "User")+"/"+ c.ID + "'>Show</a>").Title("Preview");
         })
         .Sortable()
         .Scrollable(scr=>scr.Height(230))
         .Filterable()
-        .Pageable( pageable => pageable
+        .Pageable(pageable => pageable
+            .PageSizes(new[] { 5, 10, 20, 50 })
+            .Info(true)
+//.Messages(x => x.Display("{0}-{1} from {2} Cross Reference Records").Empty("No Results"))
+            .Enabled(true)
+            .PreviousNext(true)
             .Input(true)
-            .Numeric(false)
+            .Numeric(true)
+            .Refresh(true)
+//.PageSizes(true)
+            .ButtonCount(5)
+            .Refresh(true)
         )
         .Filterable()
         //.Groupable();  
         .Groupable(g => g.Messages( m => m.Empty("")))
         .Resizable(resize => resize.Columns(true))
-        )
-     
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("Display_Details", "User"))
+            .PageSize(5).
+            ServerOperation(true)
+        ))
 </div>

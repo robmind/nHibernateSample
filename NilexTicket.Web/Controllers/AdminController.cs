@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using NilexComment.DB.Repositories;
 using NilexTicket.DB;
 using NilexTicket.DB.Repositories;
@@ -100,9 +102,26 @@ namespace NilexTicket.Controllers
 
         public ActionResult Tickets()
         {
-            var tck = ticketRepository.GetAllTicketByIsItRead();
-            return View(tck);
+            return View();
         }
+
+        public ActionResult Display_Details([DataSourceRequest] DataSourceRequest request)
+        {
+            return Json(GetDetails().ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+        }
+
+        private IEnumerable<Ticket> GetDetails()
+        {
+            var tck = ticketRepository.GetAllTicketByIsItRead();
+            var ticks = tck.Select(test => {
+                test.User = null;
+                test.Comment = null;
+                return test;
+            }).ToList();
+
+            return ticks;
+        }
+
         public JsonResult TicketStatusu(int id)
         {
             Ticket tk = ticketRepository.GetTicketByTicketId(id);

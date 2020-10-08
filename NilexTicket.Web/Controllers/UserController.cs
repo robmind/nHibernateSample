@@ -6,11 +6,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.UI;
+using Newtonsoft.Json;
 using NilexComment.DB.Repositories;
 using NilexTicket.DB;
 using NilexTicket.DB.Repositories;
 using NilexTicket.DB.Repositories.Interfaces;
 using NilexTicket.Util;
+using System.Runtime.Serialization.Json;
+using System.Web.Script.Serialization;
+using Kendo.Mvc.Extensions;
 
 namespace NilexTicket.Controllers
 {
@@ -47,13 +51,30 @@ namespace NilexTicket.Controllers
 
             return View();
         }
-        public ActionResult MyTickets([DataSourceRequest] DataSourceRequest request)
+
+        public ActionResult MyTickets()
+        {
+            return View();
+        }
+
+        public ActionResult Display_Details([DataSourceRequest] DataSourceRequest request)
+        {
+            return Json(GetDetails().ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+        }
+
+        private  IEnumerable<Ticket> GetDetails()
         {
             string kul = Session["User"] as string;
             var mod = userRepositoty.GetUserByLogin(kul);
-            var ticks = ticketRepository.GetAllTicketByUserId(mod.ID);
-            return View(ticks);
+            var ticks = ticketRepository.GetAllTicketByUserId(mod.ID).Select(test => {
+                test.User = null;
+                test.Comment = null;
+                return test;
+            }).ToList();
+
+            return ticks;
         }
+
         public ActionResult NewTicket()
         {
             return View();
