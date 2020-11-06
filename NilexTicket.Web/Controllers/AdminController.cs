@@ -140,9 +140,24 @@ namespace NilexTicket.Controllers
         }
         public ActionResult TicketDetail(int id)
         {
+            if (Session["Admin"] == null)
+            {
+                Session.Abandon();
+
+                return Redirect("~/Home/Login");
+            }
+
             string kl = Session["Admin"] as string;
+
+            Ticket tdeTicket = ticketRepository.GetTicketByTicketId(id);
+
+            if (tdeTicket == null)
+            {
+                return Redirect("~/Admin/Tickets");
+            }
+
             ViewBag.kl = userRepositoty.GetUserByLogin(kl).FullName;
-            ViewBag.tck = ticketRepository.GetTicketByTicketId(id);
+            ViewBag.tck = tdeTicket;
             var Comments = commentRepository.GetAllCommentByTicketId(id);
 
             if (ViewBag.tck == null)

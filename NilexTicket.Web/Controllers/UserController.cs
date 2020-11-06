@@ -156,9 +156,25 @@ namespace NilexTicket.Controllers
 
         public ActionResult TicketDetail(int id)
         {
+            if (Session["User"] == null)
+            {
+
+                Session.Abandon();
+
+                return Redirect("~/Home/Login");
+            }
+
             string kl = Session["User"] as string;
+
+            Ticket tdeTicket = ticketRepository.GetTicketByTicketId(id);
+
+            if (tdeTicket == null)
+            {
+                return Redirect("~/User/MyTickets");
+            }
+
             ViewBag.kl = userRepositoty.GetUserByLogin(kl).FullName;
-            ViewBag.tck = ticketRepository.GetTicketByTicketId(id);
+            ViewBag.tck = tdeTicket;
             List<Comment> Comments = (List<Comment>) commentRepository.GetAllCommentByTicketId(id);
 
             if (ViewBag.tck == null)
