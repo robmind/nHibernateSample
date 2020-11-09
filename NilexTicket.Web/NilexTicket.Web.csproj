@@ -125,6 +125,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="content.txt" />
+    <Content Include="Content\angular\nilexTicketApp.js" />
+    <Content Include="Content\angular\nilexTicketController.js" />
+    <Content Include="Content\angular\nilexTicketService.js" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\kendo.common.min.css" />
     <Content Include="Content\css\kendo.default.min.css" />

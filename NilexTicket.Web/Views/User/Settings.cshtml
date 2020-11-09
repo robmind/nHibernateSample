@@ -31,6 +31,24 @@
                 <br />
                 <input type="submit" id="btnUpdate" class="btn btn-primary" value="Update" />
             }
+            
+            @*@using (Ajax.BeginForm("Settings", "User", FormMethod.Post, new AjaxOptions { OnSuccess = "success", OnFailure = "fail" }, new { enctype = "multipart/form-data", id="registerform" }))
+            {
+                @Html.LabelFor(x => x.FullName)
+                @Html.TextBoxFor(x => x.FullName, new { @class = "form-control", ng_model = "fullName" })
+                @Html.ValidationMessageFor(x => x.FullName, "", new { @class = "text-danger" })    <br />
+                @Html.LabelFor(x => x.Username)
+                @Html.TextBoxFor(x => x.Username, new { @class = "form-control", ng_model = "username", @readonly = "readonly" })
+                @Html.ValidationMessageFor(x => x.Username, "", new { @class = "text-danger",})    <br />
+                @Html.LabelFor(x => x.Password)
+                @Html.TextBoxFor(x => x.Password, new { @class = "form-control", ng_model = "password", @Value = @upass })
+                @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger"})    <br />
+                @Html.LabelFor(x => x.Mail)
+                @Html.TextBoxFor(x => x.Mail, new { @class = "form-control", ng_model = "mail", @readonly = "readonly" })
+                @Html.ValidationMessageFor(x => x.Mail, "", new { @class = "text-danger" })    <br />
+                <br />
+                <button type="button" class="btn btn-primary" id="btnUpdate"  ng-click="UpdateSettings();">Update</button>
+            }*@
         </div>
     </div>
 </div>

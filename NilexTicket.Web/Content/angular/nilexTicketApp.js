@@ -1,0 +1,1 @@
+﻿var nilexTicket = angular.module("nilexTicketApp", [])

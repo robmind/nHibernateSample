@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="nilexTicketApp">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,7 +56,7 @@
             </div>
             <span style="color:#efeaea;text-indent:10px;line-height:1.8">
                 <br>
-                &nbsp;&nbsp;  
+                &nbsp;&nbsp;
             </span>
         </nav>
         <nav class="navbar-default navbar-side" role="navigation">
@@ -92,8 +92,11 @@
             @RenderBody()
         </div>
     </div>
-<script src="~/Content/js/jquery-ui.min.js"></script>
-<script src="~/Content/js/custom.js"></script>
+    <script src="~/Content/js/jquery-ui.min.js"></script>
+    <script src="~/Content/js/custom.js"></script>
+    <script src="~/Content/angular/nilexTicketApp.js"></script>
+    <script src="~/Content/angular/nilexTicketController.js"></script>
+    <script src="~/Content/angular/nilexTicketService.js"></script>
 
     <div id="overlay">
         <div class="cv-spinner">
